@@ -1,0 +1,62 @@
+# Temp files
+*~
+
+# Databases
+pyipad.db
+*-shm
+*-wal
+
+# Log files
+*.log
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Real binaries, build with `go build .`
+pyipad
+cmd/gencerts/gencerts
+cmd/pyrinctl/pyrinctl
+cmd/kasminer/pyrinminer
+*.exe
+*.exe~
+
+# Output of the go coverage tool
+*.out
+
+# Folders
+_obj
+_test
+vendor
+
+# Architecture specific extensions/prefixes
+*.[568vq]
+[568vq].out
+
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+_testmain.go
+
+
+# IDE
+.idea
+.vscode
+debug
+debug.test
+__debug_bin
+
+# CI
+version.txt
+coverage.txt
+
+testdbs/
+coverage.tmp
