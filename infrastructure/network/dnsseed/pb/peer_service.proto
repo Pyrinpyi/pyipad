@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "github.com/Pyrinpyi/pyipad/pb";
+
+service PeerService {
+  rpc GetPeersList(GetPeersListRequest) returns (GetPeersListResponse) {}
+}
+
+message GetPeersListRequest {
+  bytes subnetworkID = 1;
+  bool includeAllSubnetworks = 2;
+}
+
+message GetPeersListResponse {
+  repeated NetAddress addresses = 1;
+}
+
+message NetAddress {
+  int64 timestamp = 1;
+  bytes IP = 2;
+  uint32 port = 3;
+}
