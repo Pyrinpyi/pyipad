@@ -1,11 +1,11 @@
 package acceptancedatastore
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/database/serialization"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/lrucache"
-	"github.com/kaspanet/kaspad/util/staging"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/database/serialization"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/lrucache"
+	"github.com/Pyrinpyi/pyipad/util/staging"
 	"google.golang.org/protobuf/proto"
 )
 

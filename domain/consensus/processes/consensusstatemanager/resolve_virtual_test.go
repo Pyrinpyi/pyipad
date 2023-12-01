@@ -2,15 +2,16 @@ package consensusstatemanager_test
 
 import (
 	"fmt"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/testapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/testapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
 
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/testutils"
 )
 
 func TestAddBlockBetweenResolveVirtualCalls(t *testing.T) {

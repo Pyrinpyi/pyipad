@@ -1,9 +1,9 @@
 package daablocksstore
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/database/binaryserialization"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/database/binaryserialization"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
 type daaBlocksStagingShard struct {

@@ -31,9 +31,9 @@ func TestScriptBuilderAddOp(t *testing.T) {
 			expected: []byte{Op1, Op2},
 		},
 		{
-			name:     "push OP_BLAKE2B OP_EQUAL",
-			opcodes:  []byte{OpBlake2b, OpEqual},
-			expected: []byte{OpBlake2b, OpEqual},
+			name:     "push OP_BLAKE3 OP_EQUAL",
+			opcodes:  []byte{OpBlake3, OpEqual},
+			expected: []byte{OpBlake3, OpEqual},
 		},
 	}
 

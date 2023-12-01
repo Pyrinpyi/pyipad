@@ -1,13 +1,13 @@
 package blockvalidator
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/ruleerrors"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
+	"github.com/Pyrinpyi/pyipad/util/mstime"
 	"github.com/pkg/errors"
 )
 

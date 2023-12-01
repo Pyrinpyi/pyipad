@@ -1,9 +1,10 @@
 package reachabilitymanager
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/pkg/errors"
 	"math"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/pkg/errors"
 )
 
 func newReachabilityInterval(start uint64, end uint64) *model.ReachabilityInterval {

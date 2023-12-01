@@ -2,19 +2,20 @@ package difficulty_test
 
 import (
 	"fmt"
-	"github.com/kaspanet/kaspad/domain/consensus"
 	"math"
 	"math/big"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
-	"github.com/kaspanet/kaspad/domain/dagconfig"
-	"github.com/kaspanet/kaspad/util/difficulty"
+	"github.com/Pyrinpyi/pyipad/domain/consensus"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/testutils"
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/util/difficulty"
 )
 
 func TestGetHashrateString(t *testing.T) {
 	var results = map[string]string{
-		dagconfig.MainnetParams.Name: "1.53 GH/s",
+		dagconfig.MainnetParams.Name: "2 H/s",
 		dagconfig.TestnetParams.Name: "131.07 KH/s",
 		dagconfig.DevnetParams.Name:  "830 H/s",
 		dagconfig.SimnetParams.Name:  "2.00 KH/s",

@@ -1,11 +1,12 @@
 package appmessage
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
 	"math/big"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
-// MsgBlockWithTrustedData represents a kaspa BlockWithTrustedData message
+// MsgBlockWithTrustedData represents a pyrin BlockWithTrustedData message
 type MsgBlockWithTrustedData struct {
 	baseMessage
 

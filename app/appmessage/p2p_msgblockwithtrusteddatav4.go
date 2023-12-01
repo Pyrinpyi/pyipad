@@ -1,6 +1,6 @@
 package appmessage
 
-// MsgBlockWithTrustedDataV4 represents a kaspa BlockWithTrustedDataV4 message
+// MsgBlockWithTrustedDataV4 represents a pyrin BlockWithTrustedDataV4 message
 type MsgBlockWithTrustedDataV4 struct {
 	baseMessage
 

@@ -3,13 +3,13 @@ package transactionvalidator_test
 import (
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/subnetworks"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionhelper"
+	"github.com/Pyrinpyi/pyipad/domain/consensus"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/ruleerrors"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/subnetworks"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/testutils"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/transactionhelper"
 	"github.com/pkg/errors"
 )
 
@@ -44,22 +44,22 @@ func TestValidateTransactionInIsolationAndPopulateMass(t *testing.T) {
 			{"good one", 1, 1, 1, subnetworks.SubnetworkIDNative, nil, nil, nil, 0},
 			{"no inputs", 0, 1, 1, subnetworks.SubnetworkIDNative, nil, nil, ruleerrors.ErrNoTxInputs, 0},
 			{"no outputs", 1, 0, 1, subnetworks.SubnetworkIDNative, nil, nil, nil, 0},
-			{"too much sompi in one output", 1, 1, constants.MaxSompi + 1,
+			{"too much leor in one output", 1, 1, constants.MaxLeor + 1,
 				subnetworks.SubnetworkIDNative,
 				nil,
 				nil,
 				ruleerrors.ErrBadTxOutValue, 0},
-			{"too much sompi before- valid now", 1, 1, 21e14 + 1,
+			{"too much leor before- valid now", 1, 1, 21e14 + 1,
 				subnetworks.SubnetworkIDNative,
 				nil,
 				nil,
 				nil, 0},
-			{"too much sompi in one output - after hf", 1, 1, constants.MaxSompi + 1,
+			{"too much leor in one output - after hf", 1, 1, constants.MaxLeor + 1,
 				subnetworks.SubnetworkIDNative,
 				nil,
 				nil,
 				ruleerrors.ErrBadTxOutValue, 0},
-			{"too much sompi in one output", 1, 1, constants.MaxSompi + 1,
+			{"too much leor in one output", 1, 1, constants.MaxLeor + 1,
 				subnetworks.SubnetworkIDNative,
 				nil,
 				nil,
@@ -93,7 +93,7 @@ func TestValidateTransactionInIsolationAndPopulateMass(t *testing.T) {
 				&txSubnetworkData{subnetworks.SubnetworkIDCoinbase, 0, make([]byte, consensusConfig.MaxCoinbasePayloadLength+1)},
 				nil,
 				ruleerrors.ErrBadCoinbasePayloadLen, 0},
-			{"non-zero gas in Kaspa", 1, 1, 1,
+			{"non-zero gas in Pyrin", 1, 1, 1,
 				subnetworks.SubnetworkIDNative,
 				nil,
 				func(tx *externalapi.DomainTransaction) {
@@ -105,7 +105,7 @@ func TestValidateTransactionInIsolationAndPopulateMass(t *testing.T) {
 				&txSubnetworkData{subnetworks.SubnetworkIDRegistry, 1, []byte{}},
 				nil,
 				ruleerrors.ErrInvalidGas, 0},
-			{"non-zero payload in Kaspa", 1, 1, 1,
+			{"non-zero payload in Pyrin", 1, 1, 1,
 				subnetworks.SubnetworkIDNative,
 				nil,
 				func(tx *externalapi.DomainTransaction) {

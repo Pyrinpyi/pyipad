@@ -4,14 +4,14 @@ import (
 	"math/big"
 	"sync"
 
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Pyrinpyi/pyipad/util/mstime"
 
-	"github.com/kaspanet/kaspad/domain/consensus/database"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/util/staging"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/database"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/ruleerrors"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
+	"github.com/Pyrinpyi/pyipad/util/staging"
 	"github.com/pkg/errors"
 )
 
@@ -1137,7 +1137,7 @@ func (s *consensus) isNearlySyncedNoLock() (bool, error) {
 	// As a heuristic, we allow the node to mine if he is likely to be within the current DAA window of fully synced nodes.
 	// Such blocks contribute to security by maintaining the current difficulty despite possibly being slightly out of sync.
 	if now-virtualSelectedParentHeader.TimeInMilliseconds() < s.expectedDAAWindowDurationInMilliseconds {
-		log.Debugf("The selected tip timestamp is recent (%d), so IsNearlySynced returns true",
+		log.Debugf("The selected tip timestamp is recent (%d),(90_000_000 * Som so IsNearlySynced returns true",
 			virtualSelectedParentHeader.TimeInMilliseconds())
 		return true, nil
 	}

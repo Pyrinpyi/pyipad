@@ -5,11 +5,10 @@
 package util_test
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
 	"math"
 	"testing"
 
-	. "github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
 )
 
 func TestAmountCreation(t *testing.T) {
@@ -30,13 +29,13 @@ func TestAmountCreation(t *testing.T) {
 			name:     "max producible",
 			amount:   29e9,
 			valid:    true,
-			expected: Amount(constants.MaxSompi),
+			expected: Amount(constants.MaxLeor),
 		},
 		{
 			name:     "one hundred",
 			amount:   100,
 			valid:    true,
-			expected: 100 * constants.SompiPerKaspa,
+			expected: 100 * constants.LeorPerPyrin,
 		},
 		{
 			name:     "fraction",
@@ -48,13 +47,13 @@ func TestAmountCreation(t *testing.T) {
 			name:     "rounding up",
 			amount:   54.999999999999943157,
 			valid:    true,
-			expected: 55 * constants.SompiPerKaspa,
+			expected: 55 * constants.LeorPerPyrin,
 		},
 		{
 			name:     "rounding down",
 			amount:   55.000000000000056843,
 			valid:    true,
-			expected: 55 * constants.SompiPerKaspa,
+			expected: 55 * constants.LeorPerPyrin,
 		},
 
 		// Negative tests.
@@ -102,48 +101,48 @@ func TestAmountUnitConversions(t *testing.T) {
 		s         string
 	}{
 		{
-			name:      "MKAS",
-			amount:    Amount(constants.MaxSompi),
-			unit:      AmountMegaKAS,
+			name:      "MPYI",
+			amount:    Amount(constants.MaxLeor),
+			unit:      AmountMegaPYI,
 			converted: 29000,
-			s:         "29000 MKAS",
+			s:         "29000 MPYI",
 		},
 		{
-			name:      "kKAS",
+			name:      "kPYI",
 			amount:    44433322211100,
-			unit:      AmountKiloKAS,
+			unit:      AmountKiloPYI,
 			converted: 444.33322211100,
-			s:         "444.333222111 kKAS",
+			s:         "444.333222111 kPYI",
 		},
 		{
-			name:      "KAS",
+			name:      "PYI",
 			amount:    44433322211100,
-			unit:      AmountKAS,
+			unit:      AmountPYI,
 			converted: 444333.22211100,
-			s:         "444333.222111 KAS",
+			s:         "444333.222111 PYI",
 		},
 		{
-			name:      "mKAS",
+			name:      "mPYI",
 			amount:    44433322211100,
-			unit:      AmountMilliKAS,
+			unit:      AmountMilliPYI,
 			converted: 444333222.11100,
-			s:         "444333222.111 mKAS",
+			s:         "444333222.111 mPYI",
 		},
 		{
 
-			name:      "μKAS",
+			name:      "μPYI",
 			amount:    44433322211100,
-			unit:      AmountMicroKAS,
+			unit:      AmountMicroPYI,
 			converted: 444333222111.00,
-			s:         "444333222111 μKAS",
+			s:         "444333222111 μPYI",
 		},
 		{
 
-			name:      "sompi",
+			name:      "leor",
 			amount:    44433322211100,
-			unit:      AmountSompi,
+			unit:      AmountLeor,
 			converted: 44433322211100,
-			s:         "44433322211100 Sompi",
+			s:         "44433322211100 Leor",
 		},
 		{
 
@@ -151,7 +150,7 @@ func TestAmountUnitConversions(t *testing.T) {
 			amount:    44433322211100,
 			unit:      AmountUnit(-1),
 			converted: 4443332.2211100,
-			s:         "4443332.22111 1e-1 KAS",
+			s:         "4443332.22111 1e-1 PYI",
 		},
 	}
 
@@ -168,18 +167,18 @@ func TestAmountUnitConversions(t *testing.T) {
 			continue
 		}
 
-		// Verify that Amount.ToKAS works as advertised.
-		f1 := test.amount.ToUnit(AmountKAS)
-		f2 := test.amount.ToKAS()
+		// Verify that Amount.ToPYI works as advertised.
+		f1 := test.amount.ToUnit(AmountPYI)
+		f2 := test.amount.ToPYI()
 		if f1 != f2 {
-			t.Errorf("%v: ToKAS does not match ToUnit(AmountKAS): %v != %v", test.name, f1, f2)
+			t.Errorf("%v: ToPYI does not match ToUnit(AmountPYI): %v != %v", test.name, f1, f2)
 		}
 
 		// Verify that Amount.String works as advertised.
-		s1 := test.amount.Format(AmountKAS)
+		s1 := test.amount.Format(AmountPYI)
 		s2 := test.amount.String()
 		if s1 != s2 {
-			t.Errorf("%v: String does not match Format(AmountKAS): %v != %v", test.name, s1, s2)
+			t.Errorf("%v: String does not match Format(AmountPYI): %v != %v", test.name, s1, s2)
 		}
 	}
 }
@@ -192,58 +191,58 @@ func TestAmountMulF64(t *testing.T) {
 		res  Amount
 	}{
 		{
-			name: "Multiply 0.1 KAS by 2",
-			amt:  100e5, // 0.1 KAS
+			name: "Multiply 0.1 PYI by 2",
+			amt:  100e5, // 0.1 PYI
 			mul:  2,
-			res:  200e5, // 0.2 KAS
+			res:  200e5, // 0.2 PYI
 		},
 		{
-			name: "Multiply 0.2 KAS by 0.02",
-			amt:  200e5, // 0.2 KAS
+			name: "Multiply 0.2 PYI by 0.02",
+			amt:  200e5, // 0.2 PYI
 			mul:  1.02,
-			res:  204e5, // 0.204 KAS
+			res:  204e5, // 0.204 PYI
 		},
 		{
 			name: "Round down",
-			amt:  49, // 49 Sompi
+			amt:  49, // 49 Leor
 			mul:  0.01,
 			res:  0,
 		},
 		{
 			name: "Round up",
-			amt:  50, // 50 Sompi
+			amt:  50, // 50 Leor
 			mul:  0.01,
-			res:  1, // 1 Sompi
+			res:  1, // 1 Leor
 		},
 		{
 			name: "Multiply by 0.",
-			amt:  1e8, // 1 KAS
+			amt:  1e8, // 1 PYI
 			mul:  0,
-			res:  0, // 0 KAS
+			res:  0, // 0 PYI
 		},
 		{
 			name: "Multiply 1 by 0.5.",
-			amt:  1, // 1 Sompi
+			amt:  1, // 1 Leor
 			mul:  0.5,
-			res:  1, // 1 Sompi
+			res:  1, // 1 Leor
 		},
 		{
 			name: "Multiply 100 by 66%.",
-			amt:  100, // 100 Sompi
+			amt:  100, // 100 Leor
 			mul:  0.66,
-			res:  66, // 66 Sompi
+			res:  66, // 66 Leor
 		},
 		{
 			name: "Multiply 100 by 66.6%.",
-			amt:  100, // 100 Sompi
+			amt:  100, // 100 Leor
 			mul:  0.666,
-			res:  67, // 67 Sompi
+			res:  67, // 67 Leor
 		},
 		{
 			name: "Multiply 100 by 2/3.",
-			amt:  100, // 100 Sompi
+			amt:  100, // 100 Leor
 			mul:  2.0 / 3,
-			res:  67, // 67 Sompi
+			res:  67, // 67 Leor
 		},
 	}
 

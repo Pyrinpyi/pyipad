@@ -4,12 +4,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	routerpkg "github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
-	"github.com/kaspanet/kaspad/infrastructure/network/rpcclient/grpcclient"
-	"github.com/kaspanet/kaspad/util/panics"
-	"github.com/kaspanet/kaspad/version"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
+	routerpkg "github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/rpcclient/grpcclient"
+	"github.com/Pyrinpyi/pyipad/util/panics"
+	"github.com/Pyrinpyi/pyipad/version"
 	"github.com/pkg/errors"
 )
 

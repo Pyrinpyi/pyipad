@@ -1,9 +1,10 @@
 package blockheader
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
 	"math/big"
 	"testing"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
 func TestDomainBlockHeader_Equal(t *testing.T) {

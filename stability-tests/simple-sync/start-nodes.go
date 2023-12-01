@@ -7,8 +7,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kaspanet/kaspad/stability-tests/common"
-	"github.com/kaspanet/kaspad/util/panics"
+	"github.com/Pyrinpyi/pyipad/stability-tests/common"
+	"github.com/Pyrinpyi/pyipad/util/panics"
 	"github.com/pkg/errors"
 )
 
@@ -24,20 +24,20 @@ func startNodes() (teardown func(), err error) {
 	)
 
 	log.Infof("Starting nodes")
-	syncerDataDir, err := common.TempDir("kaspad-datadir-syncer")
+	syncerDataDir, err := common.TempDir("pyipad-datadir-syncer")
 	if err != nil {
 		panic(errors.Wrapf(err, "error in Tempdir"))
 	}
 	log.Infof("SYNCER datadir: %s", syncerDataDir)
 
-	syncedDataDir, err := common.TempDir("kaspad-datadir-synced")
+	syncedDataDir, err := common.TempDir("pyipad-datadir-synced")
 	if err != nil {
 		panic(errors.Wrapf(err, "error in Tempdir"))
 	}
 	log.Infof("SYNCED datadir: %s", syncedDataDir)
 
-	syncerCmd, err := common.StartCmd("KASPAD-SYNCER",
-		"kaspad",
+	syncerCmd, err := common.StartCmd("pyipad-SYNCER",
+		"pyipad",
 		common.NetworkCliArgumentFromNetParams(activeConfig().NetParams()),
 		"--appdir", syncerDataDir,
 		"--logdir", syncerDataDir,
@@ -50,8 +50,8 @@ func startNodes() (teardown func(), err error) {
 		return nil, err
 	}
 
-	syncedCmd, err := common.StartCmd("KASPAD-SYNCED",
-		"kaspad",
+	syncedCmd, err := common.StartCmd("pyipad-SYNCED",
+		"pyipad",
 		common.NetworkCliArgumentFromNetParams(activeConfig().NetParams()),
 		"--appdir", syncedDataDir,
 		"--logdir", syncedDataDir,

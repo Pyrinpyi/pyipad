@@ -12,8 +12,7 @@ interface. The functions are only exported while the tests are being run.
 package util
 
 import (
-	"github.com/kaspanet/kaspad/util/bech32"
-	"golang.org/x/crypto/blake2b"
+	"github.com/Pyrinpyi/pyipad/util/bech32"
 )
 
 // TstAppDataDir makes the internal appDir function available to the test
@@ -38,7 +37,7 @@ func TstAddressPubKeyECDSA(prefix Bech32Prefix, hash [PublicKeySizeECDSA]byte) *
 
 // TstAddressScriptHash makes an AddressScriptHash, setting the
 // unexported fields with the parameters hash and netID.
-func TstAddressScriptHash(prefix Bech32Prefix, hash [blake2b.Size256]byte) *AddressScriptHash {
+func TstAddressScriptHash(prefix Bech32Prefix, hash [32]byte) *AddressScriptHash {
 
 	return &AddressScriptHash{
 		prefix: prefix,
@@ -47,22 +46,22 @@ func TstAddressScriptHash(prefix Bech32Prefix, hash [blake2b.Size256]byte) *Addr
 }
 
 // TstAddressSAddr returns the expected script address bytes for
-// P2PK kaspa addresses.
+// P2PK pyrin addresses.
 func TstAddressSAddrP2PK(addr string) []byte {
 	_, decoded, _, _ := bech32.Decode(addr)
 	return decoded[:PublicKeySize]
 }
 
 // TstAddressSAddr returns the expected script address bytes for
-// ECDSA P2PK kaspa addresses.
+// ECDSA P2PK pyrin addresses.
 func TstAddressSAddrP2PKECDSA(addr string) []byte {
 	_, decoded, _, _ := bech32.Decode(addr)
 	return decoded[:PublicKeySizeECDSA]
 }
 
 // TstAddressSAddrP2SH returns the expected script address bytes for
-// P2SH kaspa addresses.
+// P2SH pyrin addresses.
 func TstAddressSAddrP2SH(addr string) []byte {
 	_, decoded, _, _ := bech32.Decode(addr)
-	return decoded[:blake2b.Size256]
+	return decoded[:32]
 }

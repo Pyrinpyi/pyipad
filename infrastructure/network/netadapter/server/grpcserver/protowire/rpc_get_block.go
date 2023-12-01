@@ -1,13 +1,13 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_GetBlockRequest) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetBlockRequest) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetBlockRequest is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetBlockRequest is nil")
 	}
 	return x.GetBlockRequest.toAppMessage()
 }
@@ -22,7 +22,7 @@ func (x *GetBlockRequestMessage) toAppMessage() (appmessage.Message, error) {
 	}, nil
 }
 
-func (x *KaspadMessage_GetBlockRequest) fromAppMessage(message *appmessage.GetBlockRequestMessage) error {
+func (x *PyipadMessage_GetBlockRequest) fromAppMessage(message *appmessage.GetBlockRequestMessage) error {
 	x.GetBlockRequest = &GetBlockRequestMessage{
 		Hash:                message.Hash,
 		IncludeTransactions: message.IncludeTransactions,
@@ -30,9 +30,9 @@ func (x *KaspadMessage_GetBlockRequest) fromAppMessage(message *appmessage.GetBl
 	return nil
 }
 
-func (x *KaspadMessage_GetBlockResponse) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetBlockResponse) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetBlockResponse is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetBlockResponse is nil")
 	}
 	return x.GetBlockResponse.toAppMessage()
 }
@@ -63,7 +63,7 @@ func (x *GetBlockResponseMessage) toAppMessage() (appmessage.Message, error) {
 	}, nil
 }
 
-func (x *KaspadMessage_GetBlockResponse) fromAppMessage(message *appmessage.GetBlockResponseMessage) error {
+func (x *PyipadMessage_GetBlockResponse) fromAppMessage(message *appmessage.GetBlockResponseMessage) error {
 	var err *RPCError
 	if message.Error != nil {
 		err = &RPCError{Message: message.Error.Message}

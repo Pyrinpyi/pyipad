@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/stability-tests/common"
-	"github.com/kaspanet/kaspad/util/panics"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
+	"github.com/Pyrinpyi/pyipad/stability-tests/common"
+	"github.com/Pyrinpyi/pyipad/util/panics"
 	"os"
 )
 

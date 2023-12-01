@@ -3,10 +3,11 @@ package ruleerrors
 import (
 	"errors"
 	"fmt"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
 func TestNewErrMissingTxOut(t *testing.T) {

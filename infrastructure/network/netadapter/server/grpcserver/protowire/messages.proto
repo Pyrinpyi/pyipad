@@ -1,12 +1,12 @@
 syntax = "proto3";
 package protowire;
 
-option go_package = "github.com/kaspanet/kaspad/protowire";
+option go_package = "github.com/Pyrinpyi/pyipad/protowire";
 
 import "p2p.proto";
 import "rpc.proto";
 
-message KaspadMessage {
+message PyipadMessage {
   oneof payload {
     AddressesMessage addresses = 1;
     BlockMessage block = 2;
@@ -143,9 +143,9 @@ message KaspadMessage {
 }
 
 service P2P {
-  rpc MessageStream (stream KaspadMessage) returns (stream KaspadMessage) {}
+  rpc MessageStream (stream PyipadMessage) returns (stream PyipadMessage) {}
 }
 
 service RPC {
-  rpc MessageStream (stream KaspadMessage) returns (stream KaspadMessage) {}
+  rpc MessageStream (stream PyipadMessage) returns (stream PyipadMessage) {}
 }

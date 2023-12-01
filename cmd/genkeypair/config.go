@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/Pyrinpyi/pyipad/infrastructure/config"
 	"github.com/jessevdk/go-flags"
-	"github.com/kaspanet/kaspad/infrastructure/config"
 )
 
 type configFlags struct {

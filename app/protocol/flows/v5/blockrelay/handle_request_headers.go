@@ -1,13 +1,13 @@
 package blockrelay
 
 import (
-	"github.com/kaspanet/kaspad/app/protocol/peer"
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/app/protocol/peer"
+	"github.com/Pyrinpyi/pyipad/app/protocol/protocolerrors"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/domain"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/domain"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
 )
 
 // This constant must be equal at both syncer and syncee. Therefore, never (!!) change this constant unless a new p2p

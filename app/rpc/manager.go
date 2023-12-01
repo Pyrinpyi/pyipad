@@ -1,17 +1,17 @@
 package rpc
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol"
-	"github.com/kaspanet/kaspad/app/rpc/rpccontext"
-	"github.com/kaspanet/kaspad/domain"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/utxoindex"
-	"github.com/kaspanet/kaspad/infrastructure/config"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/infrastructure/network/addressmanager"
-	"github.com/kaspanet/kaspad/infrastructure/network/connmanager"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/protocol"
+	"github.com/Pyrinpyi/pyipad/app/rpc/rpccontext"
+	"github.com/Pyrinpyi/pyipad/domain"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/utxoindex"
+	"github.com/Pyrinpyi/pyipad/infrastructure/config"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/addressmanager"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/connmanager"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter"
 	"github.com/pkg/errors"
 )
 

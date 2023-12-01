@@ -1,9 +1,9 @@
 package rejects
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/protocol/protocolerrors"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
 )
 
 // HandleRejectsContext is the interface for the context needed for the HandleRejects flow.

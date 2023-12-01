@@ -1,19 +1,20 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/pkg/errors"
 	"math"
+
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_SubmitBlockRequest) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_SubmitBlockRequest) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
 		return nil, errors.Wrapf(errorNil, "SubmitBlockRequestMessage is nil")
 	}
 	return x.SubmitBlockRequest.toAppMessage()
 }
 
-func (x *KaspadMessage_SubmitBlockRequest) fromAppMessage(message *appmessage.SubmitBlockRequestMessage) error {
+func (x *PyipadMessage_SubmitBlockRequest) fromAppMessage(message *appmessage.SubmitBlockRequestMessage) error {
 	x.SubmitBlockRequest = &SubmitBlockRequestMessage{Block: &RpcBlock{}}
 	x.SubmitBlockRequest.AllowNonDAABlocks = message.AllowNonDAABlocks
 	return x.SubmitBlockRequest.Block.fromAppMessage(message.Block)
@@ -33,14 +34,14 @@ func (x *SubmitBlockRequestMessage) toAppMessage() (appmessage.Message, error) {
 	}, nil
 }
 
-func (x *KaspadMessage_SubmitBlockResponse) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_SubmitBlockResponse) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_SubmitBlockResponse is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_SubmitBlockResponse is nil")
 	}
 	return x.SubmitBlockResponse.toAppMessage()
 }
 
-func (x *KaspadMessage_SubmitBlockResponse) fromAppMessage(message *appmessage.SubmitBlockResponseMessage) error {
+func (x *PyipadMessage_SubmitBlockResponse) fromAppMessage(message *appmessage.SubmitBlockResponseMessage) error {
 	var err *RPCError
 	if message.Error != nil {
 		err = &RPCError{Message: message.Error.Message}

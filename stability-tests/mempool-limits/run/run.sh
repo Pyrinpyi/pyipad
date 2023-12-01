@@ -1,27 +1,27 @@
 #!/bin/bash
 
-APPDIR=/tmp/kaspad-temp
-KASPAD_RPC_PORT=29587
+APPDIR=/tmp/pyipad-temp
+pyipad_RPC_PORT=29587
 
 rm -rf "${APPDIR}"
 
-kaspad --simnet --appdir="${APPDIR}" --rpclisten=0.0.0.0:"${KASPAD_RPC_PORT}" --profile=6061 &
-KASPAD_PID=$!
+pyipad --simnet --appdir="${APPDIR}" --rpclisten=0.0.0.0:"${pyipad_RPC_PORT}" --profile=6061 &
+pyipad_PID=$!
 
 sleep 1
 
-RUN_STABILITY_TESTS=true go test ../ -v -timeout 86400s -- --rpc-address=127.0.0.1:"${KASPAD_RPC_PORT}" --profile=7000
+RUN_STABILITY_TESTS=true go test ../ -v -timeout 86400s -- --rpc-address=127.0.0.1:"${pyipad_RPC_PORT}" --profile=7000
 TEST_EXIT_CODE=$?
 
-kill $KASPAD_PID
+kill $pyipad_PID
 
-wait $KASPAD_PID
-KASPAD_EXIT_CODE=$?
+wait $pyipad_PID
+pyipad_EXIT_CODE=$?
 
 echo "Exit code: $TEST_EXIT_CODE"
-echo "Kaspad exit code: $KASPAD_EXIT_CODE"
+echo "pyipad exit code: $pyipad_EXIT_CODE"
 
-if [ $TEST_EXIT_CODE -eq 0 ] && [ $KASPAD_EXIT_CODE -eq 0 ]; then
+if [ $TEST_EXIT_CODE -eq 0 ] && [ $pyipad_EXIT_CODE -eq 0 ]; then
   echo "mempool-limits test: PASSED"
   exit 0
 fi

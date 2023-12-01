@@ -1,31 +1,31 @@
 #!/bin/bash
-rm -rf /tmp/kaspad-temp
+rm -rf /tmp/pyipad-temp
 
-kaspad --devnet --appdir=/tmp/kaspad-temp --profile=6061 --loglevel=debug &
-KASPAD_PID=$!
-KASPAD_KILLED=0
-function killKaspadIfNotKilled() {
-    if [ $KASPAD_KILLED -eq 0 ]; then
-      kill $KASPAD_PID
+pyipad --devnet --appdir=/tmp/pyipad-temp --profile=6061 --loglevel=debug &
+pyipad_PID=$!
+pyipad_KILLED=0
+function killpyipadIfNotKilled() {
+    if [ $pyipad_KILLED -eq 0 ]; then
+      kill $pyipad_PID
     fi
 }
-trap "killKaspadIfNotKilled" EXIT
+trap "killpyipadIfNotKilled" EXIT
 
 sleep 1
 
 application-level-garbage --devnet -alocalhost:16611 -b blocks.dat --profile=7000
 TEST_EXIT_CODE=$?
 
-kill $KASPAD_PID
+kill $pyipad_PID
 
-wait $KASPAD_PID
-KASPAD_KILLED=1
-KASPAD_EXIT_CODE=$?
+wait $pyipad_PID
+pyipad_KILLED=1
+pyipad_EXIT_CODE=$?
 
 echo "Exit code: $TEST_EXIT_CODE"
-echo "Kaspad exit code: $KASPAD_EXIT_CODE"
+echo "pyipad exit code: $pyipad_EXIT_CODE"
 
-if [ $TEST_EXIT_CODE -eq 0 ] && [ $KASPAD_EXIT_CODE -eq 0 ]; then
+if [ $TEST_EXIT_CODE -eq 0 ] && [ $pyipad_EXIT_CODE -eq 0 ]; then
   echo "application-level-garbage test: PASSED"
   exit 0
 fi

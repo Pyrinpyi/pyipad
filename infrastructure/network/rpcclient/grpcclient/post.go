@@ -1,8 +1,8 @@
 package grpcclient
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/server/grpcserver/protowire"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/server/grpcserver/protowire"
 	"github.com/pkg/errors"
 	"google.golang.org/protobuf/encoding/protojson"
 )
@@ -12,7 +12,7 @@ import (
 // that arrives back, and returns the response as JSON
 func (c *GRPCClient) PostJSON(requestJSON string) (string, error) {
 	requestBytes := []byte(requestJSON)
-	var parsedRequest protowire.KaspadMessage
+	var parsedRequest protowire.PyipadMessage
 	err := protojson.Unmarshal(requestBytes, &parsedRequest)
 	if err != nil {
 		return "", errors.Wrapf(err, "error parsing the request")
@@ -51,7 +51,7 @@ func (c *GRPCClient) PostAppMessage(requestAppMessage appmessage.Message) (appme
 // Post is a helper function that sends the given request to the
 // RPC server, accepts the first response that arrives back, and
 // returns the response
-func (c *GRPCClient) Post(request *protowire.KaspadMessage) (*protowire.KaspadMessage, error) {
+func (c *GRPCClient) Post(request *protowire.PyipadMessage) (*protowire.PyipadMessage, error) {
 	err := c.stream.Send(request)
 	if err != nil {
 		return nil, errors.Wrapf(err, "error sending the request to the RPC server")

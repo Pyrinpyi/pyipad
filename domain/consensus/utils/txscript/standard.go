@@ -7,12 +7,12 @@ package txscript
 import (
 	"fmt"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
 	"github.com/pkg/errors"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/util"
 )
 
 // ScriptClass is an enumeration for the list of standard types of script.
@@ -207,7 +207,7 @@ func payToPubKeyScriptECDSA(pubKey []byte) ([]byte, error) {
 // payToScriptHashScript creates a new script to pay a transaction output to a
 // script hash. It is expected that the input is a valid hash.
 func payToScriptHashScript(scriptHash []byte) ([]byte, error) {
-	return NewScriptBuilder().AddOp(OpBlake2b).AddData(scriptHash).
+	return NewScriptBuilder().AddOp(OpBlake3).AddData(scriptHash).
 		AddOp(OpEqual).Script()
 }
 
@@ -260,9 +260,9 @@ func PayToAddrScript(addr util.Address) (*externalapi.ScriptPublicKey, error) {
 
 // PayToScriptHashScript takes a script and returns an equivalent pay-to-script-hash script
 func PayToScriptHashScript(redeemScript []byte) ([]byte, error) {
-	redeemScriptHash := util.HashBlake2b(redeemScript)
+	redeemScriptHash := util.HashBlake3(redeemScript)
 	script, err := NewScriptBuilder().
-		AddOp(OpBlake2b).AddData(redeemScriptHash).
+		AddOp(OpBlake3).AddData(redeemScriptHash).
 		AddOp(OpEqual).Script()
 	if err != nil {
 		return nil, err
@@ -342,7 +342,7 @@ func ExtractScriptPubKeyAddress(scriptPubKey *externalapi.ScriptPublicKey, dagPa
 
 	case ScriptHashTy:
 		// A pay-to-script-hash script is of the form:
-		//  OP_BLAKE2B <scripthash> OP_EQUAL
+		//  OP_BLAKE3 <scripthash> OP_EQUAL
 		// Therefore the script hash is the 2nd item on the stack.
 		// If the script hash ss invalid for some reason, return a nil address.
 		addr, err := util.NewAddressScriptHashFromHash(pops[1].data,
@@ -363,11 +363,11 @@ func ExtractScriptPubKeyAddress(scriptPubKey *externalapi.ScriptPublicKey, dagPa
 
 // AtomicSwapDataPushes houses the data pushes found in atomic swap contracts.
 type AtomicSwapDataPushes struct {
-	RecipientBlake2b [32]byte
-	RefundBlake2b    [32]byte
-	SecretHash       [32]byte
-	SecretSize       int64
-	LockTime         uint64
+	RecipientBlake3 [32]byte
+	RefundBlake3    [32]byte
+	SecretHash      [32]byte
+	SecretSize      int64
+	LockTime        uint64
 }
 
 // ExtractAtomicSwapDataPushes returns the data pushes from an atomic swap
@@ -398,14 +398,14 @@ func ExtractAtomicSwapDataPushes(version uint16, scriptPubKey []byte) (*AtomicSw
 		pops[5].opcode.value == OpData32 &&
 		pops[6].opcode.value == OpEqualVerify &&
 		pops[7].opcode.value == OpDup &&
-		pops[8].opcode.value == OpBlake2b &&
+		pops[8].opcode.value == OpBlake3 &&
 		pops[9].opcode.value == OpData32 &&
 		pops[10].opcode.value == OpElse &&
 		canonicalPush(pops[11]) &&
 		pops[12].opcode.value == OpCheckLockTimeVerify &&
 		pops[13].opcode.value == OpDrop &&
 		pops[14].opcode.value == OpDup &&
-		pops[15].opcode.value == OpBlake2b &&
+		pops[15].opcode.value == OpBlake3 &&
 		pops[16].opcode.value == OpData32 &&
 		pops[17].opcode.value == OpEndIf &&
 		pops[18].opcode.value == OpEqualVerify &&
@@ -416,8 +416,8 @@ func ExtractAtomicSwapDataPushes(version uint16, scriptPubKey []byte) (*AtomicSw
 
 	pushes := new(AtomicSwapDataPushes)
 	copy(pushes.SecretHash[:], pops[5].data)
-	copy(pushes.RecipientBlake2b[:], pops[9].data)
-	copy(pushes.RefundBlake2b[:], pops[16].data)
+	copy(pushes.RecipientBlake3[:], pops[9].data)
+	copy(pushes.RefundBlake3[:], pops[16].data)
 	if pops[2].data != nil {
 		locktime, err := makeScriptNum(pops[2].data, 5)
 		if err != nil {

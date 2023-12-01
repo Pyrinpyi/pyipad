@@ -6,8 +6,9 @@ package bech32
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"strings"
+
+	"github.com/pkg/errors"
 )
 
 const charset = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"

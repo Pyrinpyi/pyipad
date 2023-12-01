@@ -3,13 +3,13 @@ package transactionvalidator
 import (
 	"math"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionhelper"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/txscript"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/ruleerrors"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/transactionhelper"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/txscript"
 	"github.com/pkg/errors"
 )
 
@@ -73,17 +73,17 @@ func (v *transactionValidator) ValidateTransactionInContextAndPopulateFee(stagin
 		return err
 	}
 
-	totalSompiIn, err := v.checkTransactionInputAmounts(tx)
+	totalLeorIn, err := v.checkTransactionInputAmounts(tx)
 	if err != nil {
 		return err
 	}
 
-	totalSompiOut, err := v.checkTransactionOutputAmounts(tx, totalSompiIn)
+	totalLeorOut, err := v.checkTransactionOutputAmounts(tx, totalLeorIn)
 	if err != nil {
 		return err
 	}
 
-	tx.Fee = totalSompiIn - totalSompiOut
+	tx.Fee = totalLeorIn - totalLeorOut
 
 	err = v.checkTransactionSequenceLock(stagingArea, povBlockHash, tx)
 	if err != nil {
@@ -135,8 +135,8 @@ func (v *transactionValidator) checkTransactionCoinbaseMaturity(stagingArea *mod
 	return nil
 }
 
-func (v *transactionValidator) checkTransactionInputAmounts(tx *externalapi.DomainTransaction) (totalSompiIn uint64, err error) {
-	totalSompiIn = 0
+func (v *transactionValidator) checkTransactionInputAmounts(tx *externalapi.DomainTransaction) (totalLeorIn uint64, err error) {
+	totalLeorIn = 0
 
 	var missingOutpoints []*externalapi.DomainOutpoint
 	for _, input := range tx.Inputs {
@@ -149,10 +149,10 @@ func (v *transactionValidator) checkTransactionInputAmounts(tx *externalapi.Doma
 		// Ensure the transaction amounts are in range. Each of the
 		// output values of the input transactions must not be negative
 		// or more than the max allowed per transaction. All amounts in
-		// a transaction are in a unit value known as a sompi. One
-		// kaspa is a quantity of sompi as defined by the
-		// SompiPerKaspa constant.
-		totalSompiIn, err = v.checkEntryAmounts(utxoEntry, totalSompiIn)
+		// a transaction are in a unit value known as a leor. One
+		// pyrin is a quantity of leor as defined by the
+		// LeorPerPyrin constant.
+		totalLeorIn, err = v.checkEntryAmounts(utxoEntry, totalLeorIn)
 		if err != nil {
 			return 0, err
 		}
@@ -162,42 +162,42 @@ func (v *transactionValidator) checkTransactionInputAmounts(tx *externalapi.Doma
 		return 0, ruleerrors.NewErrMissingTxOut(missingOutpoints)
 	}
 
-	return totalSompiIn, nil
+	return totalLeorIn, nil
 }
 
-func (v *transactionValidator) checkEntryAmounts(entry externalapi.UTXOEntry, totalSompiInBefore uint64) (totalSompiInAfter uint64, err error) {
+func (v *transactionValidator) checkEntryAmounts(entry externalapi.UTXOEntry, totalLeorInBefore uint64) (totalLeorInAfter uint64, err error) {
 	// The total of all outputs must not be more than the max
 	// allowed per transaction. Also, we could potentially overflow
 	// the accumulator so check for overflow.
 
-	originTxSompi := entry.Amount()
-	totalSompiInAfter = totalSompiInBefore + originTxSompi
-	if totalSompiInAfter < totalSompiInBefore ||
-		totalSompiInAfter > constants.MaxSompi {
+	originTxLeor := entry.Amount()
+	totalLeorInAfter = totalLeorInBefore + originTxLeor
+	if totalLeorInAfter < totalLeorInBefore ||
+		totalLeorInAfter > constants.MaxLeor {
 		return 0, errors.Wrapf(ruleerrors.ErrBadTxOutValue, "total value of all transaction "+
 			"inputs is %d which is higher than max "+
-			"allowed value of %d", totalSompiInBefore,
-			constants.MaxSompi)
+			"allowed value of %d", totalLeorInBefore,
+			constants.MaxLeor)
 	}
-	return totalSompiInAfter, nil
+	return totalLeorInAfter, nil
 }
 
-func (v *transactionValidator) checkTransactionOutputAmounts(tx *externalapi.DomainTransaction, totalSompiIn uint64) (uint64, error) {
-	totalSompiOut := uint64(0)
+func (v *transactionValidator) checkTransactionOutputAmounts(tx *externalapi.DomainTransaction, totalLeorIn uint64) (uint64, error) {
+	totalLeorOut := uint64(0)
 	// Calculate the total output amount for this transaction. It is safe
 	// to ignore overflow and out of range errors here because those error
 	// conditions would have already been caught by checkTransactionAmountRanges.
 	for _, output := range tx.Outputs {
-		totalSompiOut += output.Value
+		totalLeorOut += output.Value
 	}
 
 	// Ensure the transaction does not spend more than its inputs.
-	if totalSompiIn < totalSompiOut {
+	if totalLeorIn < totalLeorOut {
 		return 0, errors.Wrapf(ruleerrors.ErrSpendTooHigh, "total value of all transaction inputs for "+
 			"the transaction is %d which is less than the amount "+
-			"spent of %d", totalSompiIn, totalSompiOut)
+			"spent of %d", totalLeorIn, totalLeorOut)
 	}
-	return totalSompiOut, nil
+	return totalLeorOut, nil
 }
 
 func (v *transactionValidator) checkTransactionSequenceLock(stagingArea *model.StagingArea,

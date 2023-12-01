@@ -1,15 +1,16 @@
 package hashes
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"hash"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/sha3"
-	"hash"
 )
 
 // HashWriter is used to incrementally hash data without concatenating all of the data to a single buffer
 // it exposes an io.Writer api and a Finalize function to get the resulting hash.
-// The used hash function is blake2b.
+// The used hash function is blake3.
 // This can only be created via one of the domain separated constructors
 type HashWriter struct {
 	hash.Hash

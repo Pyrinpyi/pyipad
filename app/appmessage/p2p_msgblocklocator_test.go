@@ -3,7 +3,7 @@ package appmessage
 import (
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 
 	"github.com/davecgh/go-spew/spew"
 )

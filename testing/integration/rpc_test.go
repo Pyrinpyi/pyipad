@@ -1,12 +1,12 @@
 package integration
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/config"
+	"github.com/Pyrinpyi/pyipad/infrastructure/config"
 	"runtime"
 	"testing"
 	"time"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/rpcclient"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/rpcclient"
 )
 
 const rpcTimeout = 10 * time.Second

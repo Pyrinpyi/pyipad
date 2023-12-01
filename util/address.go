@@ -5,10 +5,8 @@
 package util
 
 import (
+	"github.com/Pyrinpyi/pyipad/util/bech32"
 	"github.com/pkg/errors"
-	"golang.org/x/crypto/blake2b"
-
-	"github.com/kaspanet/kaspad/util/bech32"
 )
 
 var (
@@ -40,24 +38,24 @@ const (
 	Bech32PrefixUnknown Bech32Prefix = iota
 
 	// Prefix for the main network.
-	Bech32PrefixKaspa
+	Bech32PrefixPyrin
 
 	// Prefix for the dev network.
-	Bech32PrefixKaspaDev
+	Bech32Prefixpyipadev
 
 	// Prefix for the test network.
-	Bech32PrefixKaspaTest
+	Bech32PrefixPyrinTest
 
 	// Prefix for the simulation network.
-	Bech32PrefixKaspaSim
+	Bech32PrefixPyrinSim
 )
 
 // Map from strings to Bech32 address prefix constants for parsing purposes.
 var stringsToBech32Prefixes = map[string]Bech32Prefix{
-	"kaspa":     Bech32PrefixKaspa,
-	"kaspadev":  Bech32PrefixKaspaDev,
-	"kaspatest": Bech32PrefixKaspaTest,
-	"kaspasim":  Bech32PrefixKaspaSim,
+	"pyrin":     Bech32PrefixPyrin,
+	"pyipadev":  Bech32Prefixpyipadev,
+	"pyrintest": Bech32PrefixPyrinTest,
+	"pyrinsim":  Bech32PrefixPyrinSim,
 }
 
 // ParsePrefix attempts to parse a Bech32 address prefix.
@@ -82,7 +80,7 @@ func (prefix Bech32Prefix) String() string {
 }
 
 // encodeAddress returns a human-readable payment address given a network prefix
-// and a payload which encodes the kaspa network and address type. It is used
+// and a payload which encodes the pyrin network and address type. It is used
 // in both pay-to-pubkey (P2PK) and pay-to-script-hash (P2SH) address
 // encoding.
 func encodeAddress(prefix Bech32Prefix, payload []byte, version byte) string {
@@ -118,7 +116,7 @@ type Address interface {
 	Prefix() Bech32Prefix
 
 	// IsForPrefix returns whether or not the address is associated with the
-	// passed kaspa network.
+	// passed pyrin network.
 	IsForPrefix(prefix Bech32Prefix) bool
 }
 
@@ -199,7 +197,7 @@ func (a *AddressPublicKey) ScriptAddress() []byte {
 }
 
 // IsForPrefix returns whether or not the pay-to-pubkey address is associated
-// with the passed kaspa network.
+// with the passed pyrin network.
 func (a *AddressPublicKey) IsForPrefix(prefix Bech32Prefix) bool {
 	return a.prefix == prefix
 }
@@ -261,7 +259,7 @@ func (a *AddressPublicKeyECDSA) ScriptAddress() []byte {
 }
 
 // IsForPrefix returns whether or not the pay-to-pubkey address is associated
-// with the passed kaspa network.
+// with the passed pyrin network.
 func (a *AddressPublicKeyECDSA) IsForPrefix(prefix Bech32Prefix) bool {
 	return a.prefix == prefix
 }
@@ -282,12 +280,12 @@ func (a *AddressPublicKeyECDSA) String() string {
 // transaction.
 type AddressScriptHash struct {
 	prefix Bech32Prefix
-	hash   [blake2b.Size256]byte
+	hash   [32]byte
 }
 
 // NewAddressScriptHash returns a new AddressScriptHash.
 func NewAddressScriptHash(serializedScript []byte, prefix Bech32Prefix) (*AddressScriptHash, error) {
-	scriptHash := HashBlake2b(serializedScript)
+	scriptHash := HashBlake3(serializedScript)
 	return newAddressScriptHashFromHash(prefix, scriptHash)
 }
 
@@ -304,8 +302,8 @@ func NewAddressScriptHashFromHash(scriptHash []byte, prefix Bech32Prefix) (*Addr
 // known.
 func newAddressScriptHashFromHash(prefix Bech32Prefix, scriptHash []byte) (*AddressScriptHash, error) {
 	// Check for a valid script hash length.
-	if len(scriptHash) != blake2b.Size256 {
-		return nil, errors.Errorf("scriptHash must be %d bytes", blake2b.Size256)
+	if len(scriptHash) != 32 {
+		return nil, errors.Errorf("scriptHash must be %d bytes", 32)
 	}
 
 	addr := &AddressScriptHash{prefix: prefix}
@@ -326,7 +324,7 @@ func (a *AddressScriptHash) ScriptAddress() []byte {
 }
 
 // IsForPrefix returns whether or not the pay-to-script-hash address is associated
-// with the passed kaspa network.
+// with the passed pyrin network.
 func (a *AddressScriptHash) IsForPrefix(prefix Bech32Prefix) bool {
 	return a.prefix == prefix
 }
@@ -343,9 +341,9 @@ func (a *AddressScriptHash) String() string {
 	return a.EncodeAddress()
 }
 
-// HashBlake2b returns the underlying array of the script hash. This can be useful
+// HashBlake3 returns the underlying array of the script hash. This can be useful
 // when an array is more appropiate than a slice (for example, when used as map
 // keys).
-func (a *AddressScriptHash) HashBlake2b() *[blake2b.Size256]byte {
+func (a *AddressScriptHash) HashBlake3() *[32]byte {
 	return &a.hash
 }

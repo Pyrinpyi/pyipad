@@ -1,11 +1,11 @@
 package rpc
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/rpc/rpccontext"
-	"github.com/kaspanet/kaspad/app/rpc/rpchandlers"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/rpc/rpccontext"
+	"github.com/Pyrinpyi/pyipad/app/rpc/rpchandlers"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
 	"github.com/pkg/errors"
 )
 

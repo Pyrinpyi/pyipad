@@ -8,16 +8,16 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/utxo"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/utxo"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
 
-	"github.com/kaspanet/go-secp256k1"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/go-secp256k1"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 	"github.com/pkg/errors"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/util"
 )
 
 func mkGetKey(keys map[string]*secp256k1.SchnorrKeyPair) KeyDB {
@@ -213,7 +213,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixKaspaTest)
+			address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixPyrinTest)
 			if err != nil {
 				t.Errorf("failed to make address for %s: %v",
 					msg, err)
@@ -225,6 +225,7 @@ func TestSignTxOutput(t *testing.T) {
 				t.Errorf("failed to make scriptPubKey "+
 					"for %s: %v", msg, err)
 			}
+
 			err = signAndCheck(msg, tx, i, scriptPubKey, hashType,
 				mkGetKey(map[string]*secp256k1.SchnorrKeyPair{
 					address.EncodeAddress(): key,
@@ -263,7 +264,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixKaspaTest)
+			address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixPyrinTest)
 			if err != nil {
 				t.Errorf("failed to make address for %s: %v",
 					msg, err)
@@ -340,7 +341,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixKaspaTest)
+			address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixPyrinTest)
 			if err != nil {
 				t.Errorf("failed to make address for %s: %v",
 					msg, err)
@@ -354,7 +355,7 @@ func TestSignTxOutput(t *testing.T) {
 			}
 
 			scriptAddr, err := util.NewAddressScriptHash(
-				scriptPubKey.Script, util.Bech32PrefixKaspaTest)
+				scriptPubKey.Script, util.Bech32PrefixPyrinTest)
 			if err != nil {
 				t.Errorf("failed to make p2sh addr for %s: %v",
 					msg, err)
@@ -404,7 +405,7 @@ func TestSignTxOutput(t *testing.T) {
 				break
 			}
 
-			address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixKaspaTest)
+			address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixPyrinTest)
 			if err != nil {
 				t.Errorf("failed to make address for %s: %v",
 					msg, err)
@@ -418,7 +419,7 @@ func TestSignTxOutput(t *testing.T) {
 			}
 
 			scriptAddr, err := util.NewAddressScriptHash(
-				scriptPubKey.Script, util.Bech32PrefixKaspaTest)
+				scriptPubKey.Script, util.Bech32PrefixPyrinTest)
 			if err != nil {
 				t.Errorf("failed to make p2sh addr for %s: %v",
 					msg, err)
@@ -486,7 +487,7 @@ func generateKeys() (keyPair *secp256k1.SchnorrKeyPair, scriptPublicKey *externa
 	if err != nil {
 		return nil, nil, nil, errors.Errorf("failed to serialize a pubkey for %s: %s", pubKey, err)
 	}
-	address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixKaspaTest)
+	address, err := util.NewAddressPublicKey(serializedPubKey[:], util.Bech32PrefixPyrinTest)
 	if err != nil {
 		return nil, nil, nil, errors.Errorf("failed to make address for %s: %s", serializedPubKey, err)
 	}

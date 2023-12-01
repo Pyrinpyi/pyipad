@@ -2,17 +2,18 @@ package appmessage
 
 import (
 	"encoding/hex"
-	"github.com/pkg/errors"
 	"math/big"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/blockheader"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/hashes"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/utxo"
+	"github.com/pkg/errors"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/subnetworks"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionid"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/blockheader"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/hashes"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/utxo"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/subnetworks"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/transactionid"
+	"github.com/Pyrinpyi/pyipad/util/mstime"
 )
 
 // DomainBlockToMsgBlock converts an externalapi.DomainBlock to MsgBlock

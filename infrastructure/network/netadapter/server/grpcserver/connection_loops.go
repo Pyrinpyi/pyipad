@@ -1,19 +1,19 @@
 package grpcserver
 
 import (
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/logger"
 	"io"
 	"os"
 	"strconv"
 	"sync"
 	"time"
 
-	routerpkg "github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	routerpkg "github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
 	"github.com/pkg/errors"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/server/grpcserver/protowire"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/server/grpcserver/protowire"
 )
 
 func (c *gRPCConnection) connectionLoops() error {
@@ -44,7 +44,7 @@ func (c *gRPCConnection) sendLoop() error {
 		}
 
 		blockDelayOnce.Do(func() {
-			experimentalDelayEnv := os.Getenv("KASPA_EXPERIMENTAL_DELAY")
+			experimentalDelayEnv := os.Getenv("PYIPAD_EXPERIMENTAL_DELAY")
 			if experimentalDelayEnv != "" {
 				blockDelay, err = strconv.Atoi(experimentalDelayEnv)
 				if err != nil {

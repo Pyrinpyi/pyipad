@@ -1,18 +1,18 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_GetBalancesByAddressesRequest) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetBalancesByAddressesRequest) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetBalanceByAddressRequest is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetBalanceByAddressRequest is nil")
 	}
 	return x.GetBalancesByAddressesRequest.toAppMessage()
 }
 
-func (x *KaspadMessage_GetBalancesByAddressesRequest) fromAppMessage(message *appmessage.GetBalancesByAddressesRequestMessage) error {
+func (x *PyipadMessage_GetBalancesByAddressesRequest) fromAppMessage(message *appmessage.GetBalancesByAddressesRequestMessage) error {
 	x.GetBalancesByAddressesRequest = &GetBalancesByAddressesRequestMessage{
 		Addresses: message.Addresses,
 	}
@@ -28,14 +28,14 @@ func (x *GetBalancesByAddressesRequestMessage) toAppMessage() (appmessage.Messag
 	}, nil
 }
 
-func (x *KaspadMessage_GetBalancesByAddressesResponse) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetBalancesByAddressesResponse) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
 		return nil, errors.Wrapf(errorNil, "GetBalanceByAddressResponse is nil")
 	}
 	return x.GetBalancesByAddressesResponse.toAppMessage()
 }
 
-func (x *KaspadMessage_GetBalancesByAddressesResponse) fromAppMessage(message *appmessage.GetBalancesByAddressesResponseMessage) error {
+func (x *PyipadMessage_GetBalancesByAddressesResponse) fromAppMessage(message *appmessage.GetBalancesByAddressesResponseMessage) error {
 	var err *RPCError
 	if message.Error != nil {
 		err = &RPCError{Message: message.Error.Message}

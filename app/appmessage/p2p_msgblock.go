@@ -5,7 +5,7 @@
 package appmessage
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
 // defaultTransactionAlloc is the default size used for the backing array
@@ -22,7 +22,7 @@ type TxLoc struct {
 	TxLen   int
 }
 
-// MsgBlock implements the Message interface and represents a kaspa
+// MsgBlock implements the Message interface and represents a pyrin
 // block message. It is used to deliver block and transaction information in
 // response to a getdata message (MsgGetData) for a given block hash.
 type MsgBlock struct {
@@ -64,7 +64,7 @@ func (msg *MsgBlock) ConvertToPartial(subnetworkID *externalapi.DomainSubnetwork
 	}
 }
 
-// NewMsgBlock returns a new kaspa block message that conforms to the
+// NewMsgBlock returns a new pyrin block message that conforms to the
 // Message interface. See MsgBlock for details.
 func NewMsgBlock(blockHeader *MsgBlockHeader) *MsgBlock {
 	return &MsgBlock{

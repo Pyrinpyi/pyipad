@@ -1,8 +1,9 @@
 package dagconfig
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
 	"time"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
 )
 
 // The documentation refers to the following constants which aren't explicated in the code:
@@ -47,9 +48,9 @@ const (
 	// (Higher values make pruning attacks easier by a constant, lower values make merging after a split or a spike
 	// in block take longer)
 	defaultMergeSetSizeLimit                       = defaultGHOSTDAGK * 10
-	defaultSubsidyGenesisReward                    = 1 * constants.SompiPerKaspa
-	defaultPreDeflationaryPhaseBaseSubsidy         = 500 * constants.SompiPerKaspa
-	defaultDeflationaryPhaseBaseSubsidy            = 440 * constants.SompiPerKaspa
+	defaultSubsidyGenesisReward                    = 1 * constants.LeorPerPyrin
+	defaultPreDeflationaryPhaseBaseSubsidy         = 17 * constants.LeorPerPyrin
+	defaultDeflationaryPhaseBaseSubsidy            = 14 * constants.LeorPerPyrin
 	defaultCoinbasePayloadScriptPublicKeyMaxLength = 150
 	// defaultDifficultyAdjustmentWindowSize is the number of blocks in a block's past used to calculate its difficulty
 	// target.

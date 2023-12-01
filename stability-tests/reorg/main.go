@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kaspanet/kaspad/stability-tests/common"
-	"github.com/kaspanet/kaspad/util/profiling"
+	"github.com/Pyrinpyi/pyipad/stability-tests/common"
+	"github.com/Pyrinpyi/pyipad/util/profiling"
 )
 
 func main() {

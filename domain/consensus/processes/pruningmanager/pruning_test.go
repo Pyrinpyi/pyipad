@@ -2,18 +2,19 @@ package pruningmanager_test
 
 import (
 	"encoding/json"
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
 	"os"
 	"path/filepath"
 	"testing"
 	"time"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/infrastructure/db/database"
 
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/testutils"
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
 )
 
 type jsonBlock struct {
@@ -36,8 +37,8 @@ func TestPruning(t *testing.T) {
 			dagconfig.SimnetParams.Name:  "1582",
 		},
 		"dag-for-test-pruning.json": {
-			dagconfig.MainnetParams.Name: "503",
-			dagconfig.TestnetParams.Name: "503",
+			dagconfig.MainnetParams.Name: "502",
+			dagconfig.TestnetParams.Name: "502",
 			dagconfig.DevnetParams.Name:  "502",
 			dagconfig.SimnetParams.Name:  "503",
 		},

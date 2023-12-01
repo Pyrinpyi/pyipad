@@ -6,7 +6,7 @@
 package app
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/logger"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
 )
 
-var log = logger.RegisterSubSystem("KASD")
+var log = logger.RegisterSubSystem("PYID")

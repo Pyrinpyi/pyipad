@@ -5,7 +5,7 @@
 package signal
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/logger"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
 )
 
-var kasdLog = logger.RegisterSubSystem("KASD")
+var kasdLog = logger.RegisterSubSystem("PYID")

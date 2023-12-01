@@ -1,13 +1,13 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_BlockHeaders) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_BlockHeaders) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_BlockHeaders is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_BlockHeaders is nil")
 	}
 	blockHeaders, err := x.BlockHeaders.toAppMessage()
 	if err != nil {
@@ -34,7 +34,7 @@ func (x *BlockHeadersMessage) toAppMessage() ([]*appmessage.MsgBlockHeader, erro
 	return blockHeaders, nil
 }
 
-func (x *KaspadMessage_BlockHeaders) fromAppMessage(blockHeadersMessage *appmessage.BlockHeadersMessage) error {
+func (x *PyipadMessage_BlockHeaders) fromAppMessage(blockHeadersMessage *appmessage.BlockHeadersMessage) error {
 	blockHeaders := make([]*BlockHeader, len(blockHeadersMessage.BlockHeaders))
 	for i, blockHeader := range blockHeadersMessage.BlockHeaders {
 		blockHeaders[i] = &BlockHeader{}

@@ -1,29 +1,29 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_GetPeerAddressesRequest) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetPeerAddressesRequest) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetPeerAddressesRequest is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetPeerAddressesRequest is nil")
 	}
 	return &appmessage.GetPeerAddressesRequestMessage{}, nil
 }
 
-func (x *KaspadMessage_GetPeerAddressesRequest) fromAppMessage(_ *appmessage.GetPeerAddressesRequestMessage) error {
+func (x *PyipadMessage_GetPeerAddressesRequest) fromAppMessage(_ *appmessage.GetPeerAddressesRequestMessage) error {
 	return nil
 }
 
-func (x *KaspadMessage_GetPeerAddressesResponse) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetPeerAddressesResponse) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetPeerAddressesResponse is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetPeerAddressesResponse is nil")
 	}
 	return x.GetPeerAddressesResponse.toAppMessage()
 }
 
-func (x *KaspadMessage_GetPeerAddressesResponse) fromAppMessage(message *appmessage.GetPeerAddressesResponseMessage) error {
+func (x *PyipadMessage_GetPeerAddressesResponse) fromAppMessage(message *appmessage.GetPeerAddressesResponseMessage) error {
 	var err *RPCError
 	if message.Error != nil {
 		err = &RPCError{Message: message.Error.Message}

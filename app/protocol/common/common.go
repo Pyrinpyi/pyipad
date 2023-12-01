@@ -1,9 +1,10 @@
 package common
 
 import (
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	routerpkg "github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
 	"time"
+
+	peerpkg "github.com/Pyrinpyi/pyipad/app/protocol/peer"
+	routerpkg "github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
 
 	"github.com/pkg/errors"
 )

@@ -9,8 +9,8 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/id"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/id"
 )
 
 // TestVersion tests the MsgVersion API.

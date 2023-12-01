@@ -1,10 +1,10 @@
 package appmessage
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
-// MsgIBDBlockLocator represents a kaspa ibdBlockLocator message
+// MsgIBDBlockLocator represents a pyrin ibdBlockLocator message
 type MsgIBDBlockLocator struct {
 	baseMessage
 	TargetHash         *externalapi.DomainHash
@@ -16,7 +16,7 @@ func (msg *MsgIBDBlockLocator) Command() MessageCommand {
 	return CmdIBDBlockLocator
 }
 
-// NewMsgIBDBlockLocator returns a new kaspa ibdBlockLocator message
+// NewMsgIBDBlockLocator returns a new pyrin ibdBlockLocator message
 func NewMsgIBDBlockLocator(targetHash *externalapi.DomainHash,
 	blockLocatorHashes []*externalapi.DomainHash) *MsgIBDBlockLocator {
 

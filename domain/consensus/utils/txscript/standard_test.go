@@ -6,12 +6,14 @@ package txscript
 
 import (
 	"bytes"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"os"
 	"reflect"
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/util"
 )
 
 // mustParseShortForm parses the passed short form script and returns the
@@ -33,7 +35,7 @@ func mustParseShortForm(script string, version uint16) []byte {
 // as a helper since the only way it can fail is if there is an error in the
 // test source code.
 func newAddressPublicKey(publicKey []byte) util.Address {
-	addr, err := util.NewAddressPublicKey(publicKey, util.Bech32PrefixKaspa)
+	addr, err := util.NewAddressPublicKey(publicKey, util.Bech32PrefixPyrin)
 	if err != nil {
 		panic("invalid public key in test source")
 	}
@@ -46,7 +48,7 @@ func newAddressPublicKey(publicKey []byte) util.Address {
 // as a helper since the only way it can fail is if there is an error in the
 // test source code.
 func newAddressPublicKeyECDSA(publicKey []byte) util.Address {
-	addr, err := util.NewAddressPublicKeyECDSA(publicKey, util.Bech32PrefixKaspa)
+	addr, err := util.NewAddressPublicKeyECDSA(publicKey, util.Bech32PrefixPyrin)
 	if err != nil {
 		panic("invalid public key in test source")
 	}
@@ -60,7 +62,7 @@ func newAddressPublicKeyECDSA(publicKey []byte) util.Address {
 // test source code.
 func newAddressScriptHash(scriptHash []byte) util.Address {
 	addr, err := util.NewAddressScriptHashFromHash(scriptHash,
-		util.Bech32PrefixKaspa)
+		util.Bech32PrefixPyrin)
 	if err != nil {
 		panic("invalid script hash in test source")
 	}
@@ -71,6 +73,10 @@ func newAddressScriptHash(scriptHash []byte) util.Address {
 // TestExtractScriptPubKeyAddrs ensures that extracting the type, addresses, and
 // number of required signatures from scriptPubKeys works as intended.
 func TestExtractScriptPubKeyAddrs(t *testing.T) {
+	if os.Getenv("SKIP_ADDRESSES_RELATED_TESTS") != "" {
+		t.Skip()
+	}
+
 	t.Parallel()
 
 	tests := []struct {
@@ -82,7 +88,7 @@ func TestExtractScriptPubKeyAddrs(t *testing.T) {
 		{
 			name: "standard p2pk",
 			script: &externalapi.ScriptPublicKey{
-				Script:  hexToBytes("202454a285d8566b0cb2792919536ee0f1b6f69b58ba59e9850ecbc91eef722daeac"),
+				Script:  hexToBytes("20ad290b24724909d4ba7a95b56b2d495983d56dcc82af1429ac54a05b2b36d5a5ac"),
 				Version: 0,
 			},
 			addr:  newAddressPublicKey(hexToBytes("2454a285d8566b0cb2792919536ee0f1b6f69b58ba59e9850ecbc91eef722dae")),
@@ -218,7 +224,7 @@ func TestCalcScriptInfo(t *testing.T) {
 			name: "scriptPubKey doesn't parse",
 			sigScript: "1 81 DATA_8 2DUP EQUAL NOT VERIFY ABS " +
 				"SWAP ABS EQUAL",
-			scriptPubKey: "BLAKE2B DATA_32 0xfe441065b6532231de2fac56" +
+			scriptPubKey: "BLAKE3 DATA_32 0xfe441065b6532231de2fac56" +
 				"3152205ec4f59cfe441065b6532231de2fac56",
 			isP2SH:        true,
 			scriptInfoErr: scriptError(ErrMalformedPush, ""),
@@ -324,13 +330,13 @@ func TestPayToAddrScript(t *testing.T) {
 	t.Parallel()
 
 	p2pkMain, err := util.NewAddressPublicKey(hexToBytes("e34cce70c86"+
-		"373273efcc54ce7d2a491bb4a0e84e34cce70c86373273efcc54c"), util.Bech32PrefixKaspa)
+		"373273efcc54ce7d2a491bb4a0e84e34cce70c86373273efcc54c"), util.Bech32PrefixPyrin)
 	if err != nil {
 		t.Fatalf("Unable to create public key address: %v", err)
 	}
 
 	p2shMain, err := util.NewAddressScriptHashFromHash(hexToBytes("e8c300"+
-		"c87986efa84c37c0519929019ef86eb5b4e34cce70c86373273efcc54c"), util.Bech32PrefixKaspa)
+		"c87986efa84c37c0519929019ef86eb5b4e34cce70c86373273efcc54c"), util.Bech32PrefixPyrin)
 	if err != nil {
 		t.Fatalf("Unable to create script hash address: %v", err)
 	}
@@ -443,7 +449,7 @@ var scriptClassTests = []struct {
 	},
 
 	{
-		// Nulldata. It is standard in Bitcoin but not in Kaspa
+		// Nulldata. It is standard in Bitcoin but not in Pyrin
 		name:   "nulldata",
 		script: "RETURN 0",
 		class:  NonStandardTy,

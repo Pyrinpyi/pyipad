@@ -11,13 +11,11 @@ import (
 	"fmt"
 	"hash"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/go-secp256k1"
+	"lukechampine.com/blake3"
 
-	"golang.org/x/crypto/blake2b"
-
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-
-	"github.com/kaspanet/go-secp256k1"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
 )
 
 // An opcode defines the information related to a txscript opcode. opfunc, if
@@ -31,7 +29,7 @@ type opcode struct {
 	opfunc func(*parsedOpcode, *Engine) error
 }
 
-// These constants are the values of the kaspa script opcodes.
+// These constants are the values of the pyrin script opcodes.
 const (
 	Op0                   = 0x00 // 0
 	OpFalse               = 0x00 // 0 - AKA Op0
@@ -205,7 +203,7 @@ const (
 	OpUnknown167          = 0xa7 // 167
 	OpSHA256              = 0xa8 // 168
 	OpCheckMultiSigECDSA  = 0xa9 // 169
-	OpBlake2b             = 0xaa // 170
+	OpBlake3              = 0xaa // 170
 	OpCheckSigECDSA       = 0xab // 171
 	OpCheckSig            = 0xac // 172
 	OpCheckSigVerify      = 0xad // 173
@@ -487,7 +485,7 @@ var opcodeArray = [256]opcode{
 	// Crypto opcodes.
 	OpCheckMultiSigECDSA:  {OpCheckMultiSigECDSA, "OP_CHECKMULTISIGECDSA", 1, opcodeCheckMultiSigECDSA},
 	OpSHA256:              {OpSHA256, "OP_SHA256", 1, opcodeSha256},
-	OpBlake2b:             {OpBlake2b, "OP_BLAKE2B", 1, opcodeBlake2b},
+	OpBlake3:              {OpBlake3, "OP_BLAKE3", 1, opcodeBlake3},
 	OpCheckSigECDSA:       {OpCheckSigECDSA, "OP_CHECKSIGECDSA", 1, opcodeCheckSigECDSA},
 	OpCheckSig:            {OpCheckSig, "OP_CHECKSIG", 1, opcodeCheckSig},
 	OpCheckSigVerify:      {OpCheckSigVerify, "OP_CHECKSIGVERIFY", 1, opcodeCheckSigVerify},
@@ -1894,17 +1892,24 @@ func opcodeSha256(op *parsedOpcode, vm *Engine) error {
 	return nil
 }
 
-// opcodeBlake2b treats the top item of the data stack as raw bytes and replaces
-// it with blake2b(data).
+// opcodeBlake3 treats the top item of the data stack as raw bytes and replaces
+// it with blake3(data).
 //
-// Stack transformation: [... x1] -> [... blake2b(x1)]
-func opcodeBlake2b(op *parsedOpcode, vm *Engine) error {
+// Stack transformation: [... x1] -> [... blake3(x1)]
+func opcodeBlake3(op *parsedOpcode, vm *Engine) error {
 	buf, err := vm.dstack.PopByteArray()
 	if err != nil {
 		return err
 	}
-	hash := blake2b.Sum256(buf)
-	vm.dstack.PushByteArray(hash[:])
+
+	hasher := blake3.New(32, nil)
+	_, err = hasher.Write(buf)
+	if err != nil {
+		return err
+	}
+	hash := hasher.Sum(nil)
+
+	vm.dstack.PushByteArray(hash)
 	return nil
 }
 

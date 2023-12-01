@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/network/rpcclient/grpcclient"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/rpcclient/grpcclient"
 	"github.com/pkg/errors"
 )
 

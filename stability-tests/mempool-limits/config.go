@@ -3,8 +3,8 @@ package mempoollimits
 import (
 	"path/filepath"
 
+	"github.com/Pyrinpyi/pyipad/stability-tests/common"
 	"github.com/jessevdk/go-flags"
-	"github.com/kaspanet/kaspad/stability-tests/common"
 )
 
 const (
@@ -21,7 +21,7 @@ var (
 type configFlags struct {
 	LogLevel         string `long:"loglevel" description:"Set log level {trace, debug, info, warn, error, critical}"`
 	Profile          string `long:"profile" description:"Enable HTTP profiling on given port -- NOTE port must be between 1024 and 65536"`
-	KaspadRPCAddress string `long:"rpc-address" description:"RPC address of the kaspad node"`
+	pyipadRPCAddress string `long:"rpc-address" description:"RPC address of the pyipad node"`
 }
 
 var cfg *configFlags

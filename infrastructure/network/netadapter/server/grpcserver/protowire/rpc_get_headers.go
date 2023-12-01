@@ -1,18 +1,18 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_GetHeadersRequest) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetHeadersRequest) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetHeadersRequest is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetHeadersRequest is nil")
 	}
 	return x.GetHeadersRequest.toAppMessage()
 }
 
-func (x *KaspadMessage_GetHeadersRequest) fromAppMessage(message *appmessage.GetHeadersRequestMessage) error {
+func (x *PyipadMessage_GetHeadersRequest) fromAppMessage(message *appmessage.GetHeadersRequestMessage) error {
 	x.GetHeadersRequest = &GetHeadersRequestMessage{
 		StartHash:   message.StartHash,
 		Limit:       message.Limit,
@@ -32,14 +32,14 @@ func (x *GetHeadersRequestMessage) toAppMessage() (appmessage.Message, error) {
 	}, nil
 }
 
-func (x *KaspadMessage_GetHeadersResponse) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetHeadersResponse) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetHeadersResponse is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetHeadersResponse is nil")
 	}
 	return x.GetHeadersResponse.toAppMessage()
 }
 
-func (x *KaspadMessage_GetHeadersResponse) fromAppMessage(message *appmessage.GetHeadersResponseMessage) error {
+func (x *PyipadMessage_GetHeadersResponse) fromAppMessage(message *appmessage.GetHeadersResponseMessage) error {
 	var err *RPCError
 	if message.Error != nil {
 		err = &RPCError{Message: message.Error.Message}

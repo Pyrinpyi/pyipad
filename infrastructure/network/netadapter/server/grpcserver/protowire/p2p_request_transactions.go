@@ -1,13 +1,13 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_RequestTransactions) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_RequestTransactions) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_RequestTransactions is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_RequestTransactions is nil")
 	}
 	return x.RequestTransactions.toAppMessage()
 }
@@ -27,7 +27,7 @@ func (x *RequestTransactionsMessage) toAppMessage() (appmessage.Message, error) 
 	return &appmessage.MsgRequestTransactions{IDs: ids}, nil
 }
 
-func (x *KaspadMessage_RequestTransactions) fromAppMessage(msgGetTransactions *appmessage.MsgRequestTransactions) error {
+func (x *PyipadMessage_RequestTransactions) fromAppMessage(msgGetTransactions *appmessage.MsgRequestTransactions) error {
 	if len(msgGetTransactions.IDs) > appmessage.MaxInvPerRequestTransactionsMsg {
 		return errors.Errorf("too many hashes for message "+
 			"[count %d, max %d]", len(x.RequestTransactions.Ids), appmessage.MaxInvPerRequestTransactionsMsg)

@@ -1,11 +1,11 @@
 package flowcontext
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	"github.com/kaspanet/kaspad/infrastructure/network/connmanager"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/protocol/common"
+	peerpkg "github.com/Pyrinpyi/pyipad/app/protocol/peer"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/connmanager"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter"
 	"github.com/pkg/errors"
 )
 

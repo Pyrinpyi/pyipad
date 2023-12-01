@@ -4,17 +4,17 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kaspanet/kaspad/util/difficulty"
+	"github.com/Pyrinpyi/pyipad/util/difficulty"
 
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Pyrinpyi/pyipad/util/mstime"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
 
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/domain/consensus"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/testutils"
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
 )
 
 func TestDifficulty(t *testing.T) {
@@ -134,7 +134,7 @@ func TestDifficulty(t *testing.T) {
 		case dagconfig.DevnetParams.Name:
 			expectedBits = uint32(0x1f4e54ab)
 		case dagconfig.MainnetParams.Name:
-			expectedBits = uint32(0x1d02c50f)
+			expectedBits = uint32(0x207f1441)
 		}
 
 		if tip.Header.Bits() != expectedBits {

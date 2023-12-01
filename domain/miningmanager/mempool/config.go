@@ -3,11 +3,11 @@ package mempool
 import (
 	"time"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
 
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/pyipad/util"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
 )
 
 const (
@@ -24,7 +24,7 @@ const (
 	defaultMaximumOrphanTransactionCount = 50
 
 	// defaultMinimumRelayTransactionFee specifies the minimum transaction fee for a transaction to be accepted to
-	// the mempool and relayed. It is specified in sompi per 1kg (or 1000 grams) of transaction mass.
+	// the mempool and relayed. It is specified in leor per 1kg (or 1000 grams) of transaction mass.
 	defaultMinimumRelayTransactionFee = util.Amount(1000)
 
 	// Standard transaction version range might be different from what consensus accepts, therefore

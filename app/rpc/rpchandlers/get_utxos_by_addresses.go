@@ -1,18 +1,18 @@
 package rpchandlers
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/rpc/rpccontext"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/txscript"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/rpc/rpccontext"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/txscript"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
+	"github.com/Pyrinpyi/pyipad/util"
 )
 
 // HandleGetUTXOsByAddresses handles the respectively named RPC command
 func HandleGetUTXOsByAddresses(context *rpccontext.Context, _ *router.Router, request appmessage.Message) (appmessage.Message, error) {
 	if !context.Config.UTXOIndex {
 		errorMessage := &appmessage.GetUTXOsByAddressesResponseMessage{}
-		errorMessage.Error = appmessage.RPCErrorf("Method unavailable when kaspad is run without --utxoindex")
+		errorMessage.Error = appmessage.RPCErrorf("Method unavailable when pyipad is run without --utxoindex")
 		return errorMessage, nil
 	}
 

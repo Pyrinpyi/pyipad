@@ -3,9 +3,9 @@ package mine
 import (
 	"path/filepath"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
-	"github.com/kaspanet/kaspad/infrastructure/db/database/ldb"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/infrastructure/db/database"
+	"github.com/Pyrinpyi/pyipad/infrastructure/db/database/ldb"
 )
 
 const leveldbCacheSizeMiB = 256

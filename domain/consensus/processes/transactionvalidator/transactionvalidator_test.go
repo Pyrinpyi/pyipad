@@ -1,21 +1,20 @@
 package transactionvalidator_test
 
 import (
-	"github.com/kaspanet/go-secp256k1"
-	"github.com/kaspanet/kaspad/domain/consensus"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/testutils"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/txscript"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/utxo"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/pyipad/domain/consensus"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/ruleerrors"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/testutils"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/txscript"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/utxo"
+	"github.com/Pyrinpyi/pyipad/util"
 
 	"testing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/subnetworks"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/subnetworks"
 	"github.com/pkg/errors"
 )
 
@@ -58,7 +57,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			Sequence:         constants.MaxTxInSequenceNum,
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
-				100_000_000, // 1 KAS
+				100_000_000, // 1 PYI
 				scriptPublicKey,
 				true,
 				uint64(5)),
@@ -68,7 +67,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			SignatureScript:  []byte{},
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
-				100_000_000, // 1 KAS
+				100_000_000, // 1 PYI
 				scriptPublicKey,
 				true,
 				uint64(5)),
@@ -79,7 +78,7 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			Sequence:         constants.MaxTxInSequenceNum,
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
-				100_000_000, // 1 KAS
+				100_000_000, // 1 PYI
 				scriptPublicKey,
 				true,
 				uint64(6)),
@@ -103,18 +102,18 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 			Sequence:         constants.MaxTxInSequenceNum,
 			SigOpCount:       1,
 			UTXOEntry: utxo.NewUTXOEntry(
-				constants.MaxSompi+1,
+				constants.MaxLeor+1,
 				scriptPublicKey,
 				false,
 				0),
 		}
 
 		txOutput := externalapi.DomainTransactionOutput{
-			Value:           100000000, // 1 KAS
+			Value:           100000000, // 1 PYI
 			ScriptPublicKey: scriptPublicKey,
 		}
 		txOutputBigValue := externalapi.DomainTransactionOutput{
-			Value:           200_000_000, // 2 KAS
+			Value:           200_000_000, // 2 PYI
 			ScriptPublicKey: scriptPublicKey,
 		}
 
@@ -226,14 +225,14 @@ func TestValidateTransactionInContextAndPopulateFee(t *testing.T) {
 				isValid:       true,
 				expectedError: nil,
 			},
-			{ // The total inputs amount is bigger than the allowed maximum (constants.MaxSompi)
+			{ // The total inputs amount is bigger than the allowed maximum (constants.MaxLeor)
 				name:          "checkTransactionInputAmounts - invalid - after HF",
 				tx:            &txWithInvalidAmount,
 				povBlockHash:  povBlockHash,
 				isValid:       false,
 				expectedError: ruleerrors.ErrBadTxOutValue,
 			},
-			{ // The total SompiIn (sum of inputs amount) is smaller than the total SompiOut (sum of outputs value) and hence invalid.
+			{ // The total LeorIn (sum of inputs amount) is smaller than the total LeorOut (sum of outputs value) and hence invalid.
 				name:          "checkTransactionOutputAmounts",
 				tx:            &txWithBigValue,
 				povBlockHash:  povBlockHash,

@@ -1,20 +1,21 @@
 package protocol
 
 import (
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	"github.com/kaspanet/kaspad/app/protocol/flows/ready"
-	"github.com/kaspanet/kaspad/app/protocol/flows/v5"
 	"sync"
 	"sync/atomic"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/app/protocol/flows/handshake"
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
-	"github.com/kaspanet/kaspad/infrastructure/network/addressmanager"
-	"github.com/kaspanet/kaspad/infrastructure/network/connmanager"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
-	routerpkg "github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Pyrinpyi/pyipad/app/protocol/common"
+	"github.com/Pyrinpyi/pyipad/app/protocol/flows/ready"
+	v5 "github.com/Pyrinpyi/pyipad/app/protocol/flows/v5"
+
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/protocol/flows/handshake"
+	peerpkg "github.com/Pyrinpyi/pyipad/app/protocol/peer"
+	"github.com/Pyrinpyi/pyipad/app/protocol/protocolerrors"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/addressmanager"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/connmanager"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter"
+	routerpkg "github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
 	"github.com/pkg/errors"
 )
 

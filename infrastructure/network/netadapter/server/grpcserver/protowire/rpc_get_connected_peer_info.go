@@ -1,26 +1,26 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_GetConnectedPeerInfoRequest) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetConnectedPeerInfoRequest) toAppMessage() (appmessage.Message, error) {
 	return &appmessage.GetConnectedPeerInfoRequestMessage{}, nil
 }
 
-func (x *KaspadMessage_GetConnectedPeerInfoRequest) fromAppMessage(_ *appmessage.GetConnectedPeerInfoRequestMessage) error {
+func (x *PyipadMessage_GetConnectedPeerInfoRequest) fromAppMessage(_ *appmessage.GetConnectedPeerInfoRequestMessage) error {
 	return nil
 }
 
-func (x *KaspadMessage_GetConnectedPeerInfoResponse) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetConnectedPeerInfoResponse) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetConnectedPeerInfoResponse is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetConnectedPeerInfoResponse is nil")
 	}
 	return x.GetConnectedPeerInfoResponse.toAppMessage()
 }
 
-func (x *KaspadMessage_GetConnectedPeerInfoResponse) fromAppMessage(message *appmessage.GetConnectedPeerInfoResponseMessage) error {
+func (x *PyipadMessage_GetConnectedPeerInfoResponse) fromAppMessage(message *appmessage.GetConnectedPeerInfoResponseMessage) error {
 	var err *RPCError
 	if message.Error != nil {
 		err = &RPCError{Message: message.Error.Message}

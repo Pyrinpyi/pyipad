@@ -2,11 +2,11 @@ dagconfig
 ========
 
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](https://choosealicense.com/licenses/isc/)
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/kaspanet/kaspad/dagconfig)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/Pyrinpyi/pyipad/dagconfig)
 
 Package dagconfig defines DAG configuration parameters for the standard
-Kaspad networks and provides the ability for callers to define their own custom
-Kaspad networks.
+pyipad networks and provides the ability for callers to define their own custom
+pyipad networks.
 
 ## Sample Use
 
@@ -18,11 +18,11 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/kaspanet/kaspad/util"
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/util"
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
 )
 
-var testnet = flag.Bool("testnet", false, "operate on the testnet Kaspa network")
+var testnet = flag.Bool("testnet", false, "operate on the testnet Pyrin network")
 
 // By default (without --testnet), use mainnet.
 var dagParams = &dagconfig.MainnetParams

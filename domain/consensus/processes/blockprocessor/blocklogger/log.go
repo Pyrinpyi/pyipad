@@ -5,7 +5,7 @@
 package blocklogger
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/logger"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
 )
 
 var log = logger.RegisterSubSystem("BDAG")

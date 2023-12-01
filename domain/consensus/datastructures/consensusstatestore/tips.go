@@ -1,10 +1,10 @@
 package consensusstatestore
 
 import (
+	"github.com/Pyrinpyi/pyipad/domain/consensus/database/serialization"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 	"github.com/golang/protobuf/proto"
-	"github.com/kaspanet/kaspad/domain/consensus/database/serialization"
-	"github.com/kaspanet/kaspad/domain/consensus/model"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
 )
 
 var tipsKeyName = []byte("tips")

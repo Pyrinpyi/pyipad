@@ -3,18 +3,18 @@ package handshake
 import (
 	"sync/atomic"
 
-	"github.com/kaspanet/kaspad/domain"
+	"github.com/Pyrinpyi/pyipad/domain"
 
-	"github.com/kaspanet/kaspad/app/protocol/common"
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
-	"github.com/kaspanet/kaspad/infrastructure/network/addressmanager"
+	"github.com/Pyrinpyi/pyipad/app/protocol/common"
+	"github.com/Pyrinpyi/pyipad/app/protocol/protocolerrors"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/addressmanager"
 
-	"github.com/kaspanet/kaspad/infrastructure/config"
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
+	"github.com/Pyrinpyi/pyipad/infrastructure/config"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	peerpkg "github.com/kaspanet/kaspad/app/protocol/peer"
-	routerpkg "github.com/kaspanet/kaspad/infrastructure/network/netadapter/router"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	peerpkg "github.com/Pyrinpyi/pyipad/app/protocol/peer"
+	routerpkg "github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/router"
 	"github.com/pkg/errors"
 )
 

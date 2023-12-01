@@ -1,27 +1,27 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_GetInfoRequest) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetInfoRequest) toAppMessage() (appmessage.Message, error) {
 	return &appmessage.GetInfoRequestMessage{}, nil
 }
 
-func (x *KaspadMessage_GetInfoRequest) fromAppMessage(_ *appmessage.GetInfoRequestMessage) error {
+func (x *PyipadMessage_GetInfoRequest) fromAppMessage(_ *appmessage.GetInfoRequestMessage) error {
 	x.GetInfoRequest = &GetInfoRequestMessage{}
 	return nil
 }
 
-func (x *KaspadMessage_GetInfoResponse) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetInfoResponse) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetInfoResponse is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetInfoResponse is nil")
 	}
 	return x.GetInfoResponse.toAppMessage()
 }
 
-func (x *KaspadMessage_GetInfoResponse) fromAppMessage(message *appmessage.GetInfoResponseMessage) error {
+func (x *PyipadMessage_GetInfoResponse) fromAppMessage(message *appmessage.GetInfoResponseMessage) error {
 	var err *RPCError
 	if message.Error != nil {
 		err = &RPCError{Message: message.Error.Message}

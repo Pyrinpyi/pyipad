@@ -2,27 +2,28 @@ package util_test
 
 import (
 	"fmt"
-	"github.com/kaspanet/kaspad/util/difficulty"
 	"math"
 	"math/big"
 
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/pyipad/util/difficulty"
+
+	"github.com/Pyrinpyi/pyipad/util"
 )
 
 func ExampleAmount() {
 
 	a := util.Amount(0)
-	fmt.Println("Zero Sompi:", a)
+	fmt.Println("Zero Leor:", a)
 
 	a = util.Amount(1e8)
-	fmt.Println("100,000,000 Sompi:", a)
+	fmt.Println("100,000,000 Leor:", a)
 
 	a = util.Amount(1e5)
-	fmt.Println("100,000 Sompi:", a)
+	fmt.Println("100,000 Leor:", a)
 	// Output:
-	// Zero Sompi: 0 KAS
-	// 100,000,000 Sompi: 1 KAS
-	// 100,000 Sompi: 0.001 KAS
+	// Zero Leor: 0 PYI
+	// 100,000,000 Leor: 1 PYI
+	// 100,000 Leor: 0.001 PYI
 }
 
 func ExampleNewAmount() {
@@ -54,27 +55,27 @@ func ExampleNewAmount() {
 	}
 	fmt.Println(amountNaN) //Output 4
 
-	// Output: 1 KAS
-	// 0.01234567 KAS
-	// 0 KAS
-	// invalid kaspa amount
+	// Output: 1 PYI
+	// 0.01234567 PYI
+	// 0 PYI
+	// invalid pyrin amount
 }
 
 func ExampleAmount_unitConversions() {
 	amount := util.Amount(44433322211100)
 
-	fmt.Println("Sompi to kKAS:", amount.Format(util.AmountKiloKAS))
-	fmt.Println("Sompi to KAS:", amount)
-	fmt.Println("Sompi to MilliKAS:", amount.Format(util.AmountMilliKAS))
-	fmt.Println("Sompi to MicroKAS:", amount.Format(util.AmountMicroKAS))
-	fmt.Println("Sompi to Sompi:", amount.Format(util.AmountSompi))
+	fmt.Println("Leor to kPYI:", amount.Format(util.AmountKiloPYI))
+	fmt.Println("Leor to PYI:", amount)
+	fmt.Println("Leor to MilliPYI:", amount.Format(util.AmountMilliPYI))
+	fmt.Println("Leor to MicroPYI:", amount.Format(util.AmountMicroPYI))
+	fmt.Println("Leor to Leor:", amount.Format(util.AmountLeor))
 
 	// Output:
-	// Sompi to kKAS: 444.333222111 kKAS
-	// Sompi to KAS: 444333.222111 KAS
-	// Sompi to MilliKAS: 444333222.111 mKAS
-	// Sompi to MicroKAS: 444333222111 μKAS
-	// Sompi to Sompi: 44433322211100 Sompi
+	// Leor to kPYI: 444.333222111 kPYI
+	// Leor to PYI: 444333.222111 PYI
+	// Leor to MilliPYI: 444333222.111 mPYI
+	// Leor to MicroPYI: 444333222111 μPYI
+	// Leor to Leor: 44433322211100 Leor
 }
 
 // This example demonstrates how to convert the compact "bits" in a block header

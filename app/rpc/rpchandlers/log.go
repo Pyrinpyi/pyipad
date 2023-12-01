@@ -1,8 +1,8 @@
 package rpchandlers
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/logger"
-	"github.com/kaspanet/kaspad/util/panics"
+	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
+	"github.com/Pyrinpyi/pyipad/util/panics"
 )
 
 var log = logger.RegisterSubSystem("RPCS")

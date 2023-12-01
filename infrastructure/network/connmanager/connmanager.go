@@ -6,15 +6,15 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/infrastructure/network/dnsseed"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/dnsseed"
 	"github.com/pkg/errors"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/addressmanager"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/addressmanager"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter"
 
-	"github.com/kaspanet/kaspad/infrastructure/config"
+	"github.com/Pyrinpyi/pyipad/infrastructure/config"
 )
 
 // connectionRequest represents a user request (either through CLI or RPC) to connect to a certain node
@@ -258,7 +258,7 @@ func (c *ConnectionManager) seedFromDNS() {
 	if len(c.activeOutgoing) == 0 && !cfg.DisableDNSSeed {
 		dnsseed.SeedFromDNS(cfg.NetParams(), cfg.DNSSeed, false, nil,
 			cfg.Lookup, func(addresses []*appmessage.NetAddress) {
-				// Kaspad uses a lookup of the dns seeder here. Since seeder returns
+				// pyipad uses a lookup of the dns seeder here. Since seeder returns
 				// IPs of nodes and not its own IP, we can not know real IP of
 				// source. So we'll take first returned address as source.
 				_ = c.addressManager.AddAddresses(addresses...)

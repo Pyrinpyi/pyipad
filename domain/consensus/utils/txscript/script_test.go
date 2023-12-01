@@ -7,9 +7,10 @@ package txscript
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
 	"reflect"
 	"testing"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
 // TestParseOpcode tests for opcode parsing with bad data templates.
@@ -3317,17 +3318,17 @@ func TestUnparsingInvalidOpcodes(t *testing.T) {
 			expectedErr: scriptError(ErrInternal, ""),
 		},
 		{
-			name: "OP_BLAKE2B",
+			name: "OP_BLAKE3",
 			pop: &parsedOpcode{
-				opcode: &opcodeArray[OpBlake2b],
+				opcode: &opcodeArray[OpBlake3],
 				data:   nil,
 			},
 			expectedErr: nil,
 		},
 		{
-			name: "OP_BLAKE2B long",
+			name: "OP_BLAKE3 long",
 			pop: &parsedOpcode{
-				opcode: &opcodeArray[OpBlake2b],
+				opcode: &opcodeArray[OpBlake3],
 				data:   make([]byte, 1),
 			},
 			expectedErr: scriptError(ErrInternal, ""),
@@ -3479,7 +3480,7 @@ func TestPushedData(t *testing.T) {
 			true,
 		},
 		{
-			"DUP BLAKE2B '17VZNX1SN5NtKa8UQFxwQbFeFc3iqRYhem' EQUALVERIFY CHECKSIG",
+			"DUP BLAKE3 '17VZNX1SN5NtKa8UQFxwQbFeFc3iqRYhem' EQUALVERIFY CHECKSIG",
 			[][]byte{
 				// 17VZNX1SN5NtKa8UQFxwQbFeFc3iqRYhem
 				{

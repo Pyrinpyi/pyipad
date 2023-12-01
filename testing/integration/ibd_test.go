@@ -1,18 +1,19 @@
 package integration
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/mining"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/mining"
 	"math/rand"
+	"os"
 	"reflect"
 	"sync"
 	"testing"
 	"time"
 
-	"github.com/kaspanet/kaspad/domain/dagconfig"
+	"github.com/Pyrinpyi/pyipad/domain/dagconfig"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 )
 
 func TestIBD(t *testing.T) {
@@ -210,6 +211,10 @@ var currentMockTimestamp int64 = 0
 // between every two blocks. This is done to avoid the timestamp threshold validation
 // of ibd-with-headers-proof
 func mineNextBlockWithMockTimestamps(t *testing.T, harness *appHarness, rd *rand.Rand) *externalapi.DomainBlock {
+	if os.Getenv("SKIP_ADDRESSES_RELATED_TESTS") != "" {
+		t.Skip()
+	}
+
 	blockTemplate, err := harness.rpcClient.GetBlockTemplate(harness.miningAddress, "")
 	if err != nil {
 		t.Fatalf("Error getting block template: %+v", err)

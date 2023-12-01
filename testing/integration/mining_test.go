@@ -2,15 +2,20 @@ package integration
 
 import (
 	"math/rand"
+	"os"
 	"testing"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/mining"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/mining"
 )
 
 func mineNextBlock(t *testing.T, harness *appHarness) *externalapi.DomainBlock {
+	if os.Getenv("SKIP_ADDRESSES_RELATED_TESTS") != "" {
+		t.Skip()
+	}
+
 	blockTemplate, err := harness.rpcClient.GetBlockTemplate(harness.miningAddress, "integration")
 	if err != nil {
 		t.Fatalf("Error getting block template: %+v", err)

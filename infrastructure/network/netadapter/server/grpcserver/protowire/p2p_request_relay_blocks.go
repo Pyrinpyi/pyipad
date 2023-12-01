@@ -1,13 +1,13 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_RequestRelayBlocks) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_RequestRelayBlocks) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_RequestRelayBlocks is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_RequestRelayBlocks is nil")
 	}
 	return x.RequestRelayBlocks.toAppMessage()
 }
@@ -28,7 +28,7 @@ func (x *RequestRelayBlocksMessage) toAppMessage() (appmessage.Message, error) {
 
 }
 
-func (x *KaspadMessage_RequestRelayBlocks) fromAppMessage(msgGetRelayBlocks *appmessage.MsgRequestRelayBlocks) error {
+func (x *PyipadMessage_RequestRelayBlocks) fromAppMessage(msgGetRelayBlocks *appmessage.MsgRequestRelayBlocks) error {
 	if len(msgGetRelayBlocks.Hashes) > appmessage.MaxRequestRelayBlocksHashes {
 		return errors.Errorf("too many hashes for message "+
 			"[count %d, max %d]", len(msgGetRelayBlocks.Hashes), appmessage.MaxRequestRelayBlocksHashes)

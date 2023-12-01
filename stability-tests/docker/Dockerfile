@@ -1,14 +1,14 @@
-ARG KASPAD_IMAGE
-ARG KASPAMINER_IMAGE
+ARG PYIPAD_IMAGE
+ARG PYIPADMINER_IMAGE
 
-FROM ${KASPAD_IMAGE} as kaspad
-FROM ${KASPAMINER_IMAGE} as kaspaminer
+FROM ${PYIPAD_IMAGE} as pyipad
+FROM ${PYIPADMINER_IMAGE} as pyrinminer
 
 FROM golang:1.19-alpine
 
-RUN mkdir -p /go/src/github.com/kaspanet/kaspad
+RUN mkdir -p /go/src/github.com/Pyrinpyi/pyipad
 
-WORKDIR /go/src/github.com/kaspanet/kaspad
+WORKDIR /go/src/github.com/Pyrinpyi/pyipad
 
 RUN apk add bash build-base git
 
@@ -19,11 +19,11 @@ RUN go mod download
 
 COPY . .
 
-COPY --from=kaspad /app/ /app/
-COPY --from=kaspaminer /app/ /app/
+COPY --from=pyipad /app/ /app/
+COPY --from=pyrinminer /app/ /app/
 ENV PATH="/app:${PATH}"
 
-WORKDIR /go/src/github.com/kaspanet/kaspad/stability-tests
+WORKDIR /go/src/github.com/Pyrinpyi/pyipad/stability-tests
 
 RUN go install ./...
 

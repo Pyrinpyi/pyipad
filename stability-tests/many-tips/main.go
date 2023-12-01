@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/kaspanet/go-secp256k1"
-	"github.com/kaspanet/kaspad/app/appmessage"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/mining"
-	"github.com/kaspanet/kaspad/util"
+	"github.com/Pyrinpyi/go-secp256k1"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/mining"
+	"github.com/Pyrinpyi/pyipad/util"
 	"math/rand"
 	"os"
 	"os/exec"
@@ -15,10 +15,10 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/kaspanet/kaspad/stability-tests/common"
-	"github.com/kaspanet/kaspad/stability-tests/common/rpc"
-	"github.com/kaspanet/kaspad/util/panics"
-	"github.com/kaspanet/kaspad/util/profiling"
+	"github.com/Pyrinpyi/pyipad/stability-tests/common"
+	"github.com/Pyrinpyi/pyipad/stability-tests/common/rpc"
+	"github.com/Pyrinpyi/pyipad/util/panics"
+	"github.com/Pyrinpyi/pyipad/util/profiling"
 	"github.com/pkg/errors"
 )
 
@@ -102,14 +102,14 @@ func realMain() error {
 
 func startNode() (teardown func(), err error) {
 	log.Infof("Starting node")
-	dataDir, err := common.TempDir("kaspad-datadir")
+	dataDir, err := common.TempDir("pyipad-datadir")
 	if err != nil {
 		panic(errors.Wrapf(err, "Error in Tempdir"))
 	}
-	log.Infof("kaspad datadir: %s", dataDir)
+	log.Infof("pyipad datadir: %s", dataDir)
 
-	kaspadCmd, err := common.StartCmd("KASPAD",
-		"kaspad",
+	pyipadCmd, err := common.StartCmd("pyipad",
+		"pyipad",
 		common.NetworkCliArgumentFromNetParams(activeConfig().NetParams()),
 		"--appdir", dataDir,
 		"--logdir", dataDir,
@@ -124,15 +124,15 @@ func startNode() (teardown func(), err error) {
 
 	processesStoppedWg := sync.WaitGroup{}
 	processesStoppedWg.Add(1)
-	spawn("startNode-kaspadCmd.Wait", func() {
-		err := kaspadCmd.Wait()
+	spawn("startNode-pyipadCmd.Wait", func() {
+		err := pyipadCmd.Wait()
 		if err != nil {
 			if atomic.LoadUint64(&shutdown) == 0 {
-				panics.Exit(log, fmt.Sprintf("kaspadCmd closed unexpectedly: %s. See logs at: %s", err, dataDir))
+				panics.Exit(log, fmt.Sprintf("pyipadCmd closed unexpectedly: %s. See logs at: %s", err, dataDir))
 			}
 			if !strings.Contains(err.Error(), "signal: killed") {
-				// TODO: Panic here and check why sometimes kaspad closes ungracefully
-				log.Errorf("kaspadCmd closed with an error: %s. See logs at: %s", err, dataDir)
+				// TODO: Panic here and check why sometimes pyipad closes ungracefully
+				log.Errorf("pyipadCmd closed with an error: %s. See logs at: %s", err, dataDir)
 			}
 		}
 		processesStoppedWg.Done()
@@ -140,7 +140,7 @@ func startNode() (teardown func(), err error) {
 	return func() {
 		log.Infof("defer start-node")
 		atomic.StoreUint64(&shutdown, 1)
-		killWithSigterm(kaspadCmd, "kaspadCmd")
+		killWithSigterm(pyipadCmd, "pyipadCmd")
 
 		processesStoppedChan := make(chan struct{})
 		spawn("startNode-processStoppedWg.Wait", func() {
@@ -226,8 +226,8 @@ func mineLoopUntilHavingOnlyOneTipInDAG(rpcClient *rpc.Client, miningAddress uti
 	}
 	numOfBlocksBeforeMining := dagInfo.BlockCount
 
-	kaspaMinerCmd, err := common.StartCmd("MINER",
-		"kaspaminer",
+	pyrinMinerCmd, err := common.StartCmd("MINER",
+		"pyrinminer",
 		common.NetworkCliArgumentFromNetParams(activeConfig().NetParams()),
 		"-s", rpcAddress,
 		"--mine-when-not-synced",
@@ -240,8 +240,8 @@ func mineLoopUntilHavingOnlyOneTipInDAG(rpcClient *rpc.Client, miningAddress uti
 	startMiningTime := time.Now()
 	shutdown := uint64(0)
 
-	spawn("kaspa-miner-Cmd.Wait", func() {
-		err := kaspaMinerCmd.Wait()
+	spawn("pyrin-miner-Cmd.Wait", func() {
+		err := pyrinMinerCmd.Wait()
 		if err != nil {
 			if atomic.LoadUint64(&shutdown) == 0 {
 				panics.Exit(log, fmt.Sprintf("minerCmd closed unexpectedly: %s.", err))
@@ -283,7 +283,7 @@ func mineLoopUntilHavingOnlyOneTipInDAG(rpcClient *rpc.Client, miningAddress uti
 	numOfAddedBlocks := dagInfo.BlockCount - numOfBlocksBeforeMining
 	log.Infof("Added %d blocks to reach this.", numOfAddedBlocks)
 	atomic.StoreUint64(&shutdown, 1)
-	killWithSigterm(kaspaMinerCmd, "kaspaMinerCmd")
+	killWithSigterm(pyrinMinerCmd, "pyrinMinerCmd")
 	return nil
 }
 

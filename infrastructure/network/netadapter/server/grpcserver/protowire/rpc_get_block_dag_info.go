@@ -1,25 +1,25 @@
 package protowire
 
 import (
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
-func (x *KaspadMessage_GetBlockDagInfoRequest) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetBlockDagInfoRequest) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetBlockDagInfoRequest is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetBlockDagInfoRequest is nil")
 	}
 	return &appmessage.GetBlockDAGInfoRequestMessage{}, nil
 }
 
-func (x *KaspadMessage_GetBlockDagInfoRequest) fromAppMessage(_ *appmessage.GetBlockDAGInfoRequestMessage) error {
+func (x *PyipadMessage_GetBlockDagInfoRequest) fromAppMessage(_ *appmessage.GetBlockDAGInfoRequestMessage) error {
 	x.GetBlockDagInfoRequest = &GetBlockDagInfoRequestMessage{}
 	return nil
 }
 
-func (x *KaspadMessage_GetBlockDagInfoResponse) toAppMessage() (appmessage.Message, error) {
+func (x *PyipadMessage_GetBlockDagInfoResponse) toAppMessage() (appmessage.Message, error) {
 	if x == nil {
-		return nil, errors.Wrapf(errorNil, "KaspadMessage_GetBlockDagInfoResponse is nil")
+		return nil, errors.Wrapf(errorNil, "PyipadMessage_GetBlockDagInfoResponse is nil")
 	}
 	return x.GetBlockDagInfoResponse.toAppMessage()
 }
@@ -50,7 +50,7 @@ func (x *GetBlockDagInfoResponseMessage) toAppMessage() (appmessage.Message, err
 	}, nil
 }
 
-func (x *KaspadMessage_GetBlockDagInfoResponse) fromAppMessage(message *appmessage.GetBlockDAGInfoResponseMessage) error {
+func (x *PyipadMessage_GetBlockDagInfoResponse) fromAppMessage(message *appmessage.GetBlockDAGInfoResponseMessage) error {
 	var err *RPCError
 	if message.Error != nil {
 		err = &RPCError{Message: message.Error.Message}

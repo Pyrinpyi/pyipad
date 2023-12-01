@@ -5,13 +5,14 @@
 package addressmanager
 
 import (
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
-	"github.com/kaspanet/kaspad/util/mstime"
 	"net"
 	"sync"
 	"time"
 
-	"github.com/kaspanet/kaspad/app/appmessage"
+	"github.com/Pyrinpyi/pyipad/infrastructure/db/database"
+	"github.com/Pyrinpyi/pyipad/util/mstime"
+
+	"github.com/Pyrinpyi/pyipad/app/appmessage"
 	"github.com/pkg/errors"
 )
 
@@ -55,7 +56,7 @@ func netAddressKey(netAddress *appmessage.NetAddress) addressKey {
 }
 
 // AddressManager provides a concurrency safe address manager for caching potential
-// peers on the Kaspa network.
+// peers on the Pyrin network.
 type AddressManager struct {
 	store          *addressStore
 	localAddresses *localAddressManager
@@ -64,7 +65,7 @@ type AddressManager struct {
 	random         addressRandomizer
 }
 
-// New returns a new Kaspa address manager.
+// New returns a new Pyrin address manager.
 func New(cfg *Config, database database.Database) (*AddressManager, error) {
 	addressStore, err := newAddressStore(database)
 	if err != nil {

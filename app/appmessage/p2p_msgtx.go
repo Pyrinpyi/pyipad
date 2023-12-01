@@ -8,11 +8,11 @@ import (
 	"encoding/binary"
 	"strconv"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/subnetworks"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/subnetworks"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
 const (
@@ -54,14 +54,14 @@ const (
 	minTxPayload = 10
 )
 
-// Outpoint defines a kaspa data type that is used to track previous
+// Outpoint defines a pyrin data type that is used to track previous
 // transaction outputs.
 type Outpoint struct {
 	TxID  externalapi.DomainTransactionID
 	Index uint32
 }
 
-// NewOutpoint returns a new kaspa transaction outpoint point with the
+// NewOutpoint returns a new pyrin transaction outpoint point with the
 // provided hash and index.
 func NewOutpoint(txID *externalapi.DomainTransactionID, index uint32) *Outpoint {
 	return &Outpoint{
@@ -85,7 +85,7 @@ func (o Outpoint) String() string {
 	return string(buf)
 }
 
-// TxIn defines a kaspa transaction input.
+// TxIn defines a pyrin transaction input.
 type TxIn struct {
 	PreviousOutpoint Outpoint
 	SignatureScript  []byte
@@ -93,7 +93,7 @@ type TxIn struct {
 	SigOpCount       byte
 }
 
-// NewTxIn returns a new kaspa transaction input with the provided
+// NewTxIn returns a new pyrin transaction input with the provided
 // previous outpoint point and signature script with a default sequence of
 // MaxTxInSequenceNum.
 func NewTxIn(prevOut *Outpoint, signatureScript []byte, sequence uint64, sigOpCount byte) *TxIn {
@@ -105,13 +105,13 @@ func NewTxIn(prevOut *Outpoint, signatureScript []byte, sequence uint64, sigOpCo
 	}
 }
 
-// TxOut defines a kaspa transaction output.
+// TxOut defines a pyrin transaction output.
 type TxOut struct {
 	Value        uint64
 	ScriptPubKey *externalapi.ScriptPublicKey
 }
 
-// NewTxOut returns a new kaspa transaction output with the provided
+// NewTxOut returns a new pyrin transaction output with the provided
 // transaction value and public key script.
 func NewTxOut(value uint64, scriptPubKey *externalapi.ScriptPublicKey) *TxOut {
 	return &TxOut{
@@ -120,7 +120,7 @@ func NewTxOut(value uint64, scriptPubKey *externalapi.ScriptPublicKey) *TxOut {
 	}
 }
 
-// MsgTx implements the Message interface and represents a kaspa tx message.
+// MsgTx implements the Message interface and represents a pyrin tx message.
 // It is used to deliver transaction information in response to a getdata
 // message (MsgGetData) for a given transaction.
 //

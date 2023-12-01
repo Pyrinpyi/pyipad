@@ -1,11 +1,11 @@
 package transactionvalidator
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/ruleerrors"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/subnetworks"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/transactionhelper"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/ruleerrors"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/subnetworks"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/transactionhelper"
 	"github.com/pkg/errors"
 )
 
@@ -67,35 +67,35 @@ func (v *transactionValidator) checkTransactionAmountRanges(tx *externalapi.Doma
 	// output must not be negative or more than the max allowed per
 	// transaction. Also, the total of all outputs must abide by the same
 	// restrictions. All amounts in a transaction are in a unit value known
-	// as a sompi. One kaspa is a quantity of sompi as defined by the
-	// sompiPerKaspa constant.
-	var totalSompi uint64
+	// as a leor. One pyrin is a quantity of leor as defined by the
+	// LeorPerPyrin constant.
+	var totalLeor uint64
 	for _, txOut := range tx.Outputs {
-		sompi := txOut.Value
-		if sompi == 0 {
+		leor := txOut.Value
+		if leor == 0 {
 			return errors.Wrap(ruleerrors.ErrTxOutValueZero, "zero value outputs are forbidden")
 		}
 
-		if sompi > constants.MaxSompi {
+		if leor > constants.MaxLeor {
 			return errors.Wrapf(ruleerrors.ErrBadTxOutValue, "transaction output value of %d is "+
-				"higher than max allowed value of %d", sompi, constants.MaxSompi)
+				"higher than max allowed value of %d", leor, constants.MaxLeor)
 		}
 
 		// Binary arithmetic guarantees that any overflow is detected and reported.
-		// This is impossible for Kaspa, but perhaps possible if an alt increases
+		// This is impossible for Pyrin, but perhaps possible if an alt increases
 		// the total money supply.
-		newTotalSompi := totalSompi + sompi
-		if newTotalSompi < totalSompi {
+		newTotalLeor := totalLeor + leor
+		if newTotalLeor < totalLeor {
 			return errors.Wrapf(ruleerrors.ErrBadTxOutValue, "total value of all transaction "+
 				"outputs exceeds max allowed value of %d",
-				constants.MaxSompi)
+				constants.MaxLeor)
 		}
-		totalSompi = newTotalSompi
-		if totalSompi > constants.MaxSompi {
+		totalLeor = newTotalLeor
+		if totalLeor > constants.MaxLeor {
 			return errors.Wrapf(ruleerrors.ErrBadTxOutValue, "total value of all transaction "+
 				"outputs is %d which is higher than max "+
-				"allowed value of %d", totalSompi,
-				constants.MaxSompi)
+				"allowed value of %d", totalLeor,
+				constants.MaxLeor)
 		}
 	}
 

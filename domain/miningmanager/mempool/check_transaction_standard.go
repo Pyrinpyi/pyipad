@@ -3,13 +3,13 @@ package mempool
 import (
 	"fmt"
 
-	"github.com/kaspanet/kaspad/util/txmass"
+	"github.com/Pyrinpyi/pyipad/util/txmass"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/consensushashing"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/kaspanet/kaspad/domain/consensus/utils/txscript"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/txscript"
 )
 
 const (
@@ -45,7 +45,7 @@ func (mp *mempool) checkTransactionStandardInIsolation(transaction *externalapi.
 	// The transaction must be a currently supported version.
 	//
 	// This check is currently mirrored in consensus.
-	// However, in a later version of Kaspa the consensus-valid transaction version range might diverge from the
+	// However, in a later version of Pyrin the consensus-valid transaction version range might diverge from the
 	// standard transaction version range, and thus the validation should happen in both levels.
 	if transaction.Version > mp.config.MaximumStandardTransactionVersion ||
 		transaction.Version < mp.config.MinimumStandardTransactionVersion {
@@ -131,12 +131,12 @@ func (mp *mempool) IsTransactionOutputDust(output *externalapi.DomainTransaction
 
 	// The output is considered dust if the cost to the network to spend the
 	// coins is more than 1/3 of the minimum free transaction relay fee.
-	// mp.config.MinimumRelayTransactionFee is in sompi/KB, so multiply
+	// mp.config.MinimumRelayTransactionFee is in leor/KB, so multiply
 	// by 1000 to convert to bytes.
 	//
 	// Using the typical values for a pay-to-pubkey transaction from
 	// the breakdown above and the default minimum free transaction relay
-	// fee of 1000, this equates to values less than 546 sompi being
+	// fee of 1000, this equates to values less than 546 leor being
 	// considered dust.
 	//
 	// The following is equivalent to (value/totalSerializedSize) * (1/3) * 1000
@@ -189,7 +189,7 @@ func (mp *mempool) checkTransactionStandardInContext(transaction *externalapi.Do
 func (mp *mempool) minimumRequiredTransactionRelayFee(mass uint64) uint64 {
 	// Calculate the minimum fee for a transaction to be allowed into the
 	// mempool and relayed by scaling the base fee. MinimumRelayTransactionFee is in
-	// sompi/kg so multiply by mass (which is in grams) and divide by 1000 to get minimum sompis.
+	// leor/kg so multiply by mass (which is in grams) and divide by 1000 to get minimum leors.
 	minimumFee := (mass * uint64(mp.config.MinimumRelayTransactionFee)) / 1000
 
 	if minimumFee == 0 && mp.config.MinimumRelayTransactionFee > 0 {
@@ -198,8 +198,8 @@ func (mp *mempool) minimumRequiredTransactionRelayFee(mass uint64) uint64 {
 
 	// Set the minimum fee to the maximum possible value if the calculated
 	// fee is not in the valid range for monetary amounts.
-	if minimumFee > constants.MaxSompi {
-		minimumFee = constants.MaxSompi
+	if minimumFee > constants.MaxLeor {
+		minimumFee = constants.MaxLeor
 	}
 
 	return minimumFee

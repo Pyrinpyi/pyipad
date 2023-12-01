@@ -1,10 +1,10 @@
 package appmessage
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
-// MsgInvRelayBlock implements the Message interface and represents a kaspa
+// MsgInvRelayBlock implements the Message interface and represents a pyrin
 // block inventory message. It is used to notify the network about new block
 // by sending their hash, and let the receiving node decide if it needs it.
 type MsgInvRelayBlock struct {
@@ -18,7 +18,7 @@ func (msg *MsgInvRelayBlock) Command() MessageCommand {
 	return CmdInvRelayBlock
 }
 
-// NewMsgInvBlock returns a new kaspa invrelblk message that conforms to
+// NewMsgInvBlock returns a new pyrin invrelblk message that conforms to
 // the Message interface. See MsgInvRelayBlock for details.
 func NewMsgInvBlock(hash *externalapi.DomainHash) *MsgInvRelayBlock {
 	return &MsgInvRelayBlock{

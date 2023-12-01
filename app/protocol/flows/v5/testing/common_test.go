@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kaspanet/kaspad/app/protocol/protocolerrors"
+	"github.com/Pyrinpyi/pyipad/app/protocol/protocolerrors"
 	"github.com/pkg/errors"
 )
 

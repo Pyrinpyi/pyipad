@@ -8,9 +8,9 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 )
 
 // These are the constants specified for maximums in individual scripts.
@@ -33,7 +33,7 @@ func isSmallInt(op *opcode) bool {
 // transaction, false otherwise.
 func isScriptHash(pops []parsedOpcode) bool {
 	return len(pops) == 3 &&
-		pops[0].opcode.value == OpBlake2b &&
+		pops[0].opcode.value == OpBlake3 &&
 		pops[1].opcode.value == OpData32 &&
 		pops[2].opcode.value == OpEqual
 }

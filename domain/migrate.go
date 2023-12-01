@@ -1,9 +1,10 @@
 package domain
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/pkg/errors"
 	"math"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/pkg/errors"
 )
 
 func (d *domain) migrate() error {

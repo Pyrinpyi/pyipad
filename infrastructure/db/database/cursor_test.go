@@ -8,10 +8,11 @@ package database_test
 import (
 	"bytes"
 	"fmt"
-	"github.com/kaspanet/kaspad/infrastructure/db/database"
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/Pyrinpyi/pyipad/infrastructure/db/database"
 )
 
 func prepareCursorForTest(t *testing.T, db database.Database, testName string) database.Cursor {

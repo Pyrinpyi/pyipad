@@ -5,53 +5,54 @@
 package util
 
 import (
-	"github.com/kaspanet/kaspad/domain/consensus/utils/constants"
-	"github.com/pkg/errors"
 	"math"
 	"strconv"
+
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
+	"github.com/pkg/errors"
 )
 
 // AmountUnit describes a method of converting an Amount to something
-// other than the base unit of a kaspa. The value of the AmountUnit
+// other than the base unit of a pyrin. The value of the AmountUnit
 // is the exponent component of the decadic multiple to convert from
-// an amount in kaspa to an amount counted in units.
+// an amount in pyrin to an amount counted in units.
 type AmountUnit int
 
-// These constants define various units used when describing a kaspa
+// These constants define various units used when describing a pyrin
 // monetary amount.
 const (
-	AmountMegaKAS  AmountUnit = 6
-	AmountKiloKAS  AmountUnit = 3
-	AmountKAS      AmountUnit = 0
-	AmountMilliKAS AmountUnit = -3
-	AmountMicroKAS AmountUnit = -6
-	AmountSompi    AmountUnit = -8
+	AmountMegaPYI  AmountUnit = 6
+	AmountKiloPYI  AmountUnit = 3
+	AmountPYI      AmountUnit = 0
+	AmountMilliPYI AmountUnit = -3
+	AmountMicroPYI AmountUnit = -6
+	AmountLeor     AmountUnit = -8
 )
 
 // String returns the unit as a string. For recognized units, the SI
-// prefix is used, or "Sompi" for the base unit. For all unrecognized
-// units, "1eN KAS" is returned, where N is the AmountUnit.
+// prefix is used, or "Leor" for the base unit. For all unrecognized
+// units, "1eN PYI" is returned, where N is the AmountUnit.
 func (u AmountUnit) String() string {
 	switch u {
-	case AmountMegaKAS:
-		return "MKAS"
-	case AmountKiloKAS:
-		return "kKAS"
-	case AmountKAS:
-		return "KAS"
-	case AmountMilliKAS:
-		return "mKAS"
-	case AmountMicroKAS:
-		return "μKAS"
-	case AmountSompi:
-		return "Sompi"
+	case AmountMegaPYI:
+		return "MPYI"
+	case AmountKiloPYI:
+		return "kPYI"
+	case AmountPYI:
+		return "PYI"
+	case AmountMilliPYI:
+		return "mPYI"
+	case AmountMicroPYI:
+		return "μPYI"
+	case AmountLeor:
+		return "Leor"
 	default:
-		return "1e" + strconv.FormatInt(int64(u), 10) + " KAS"
+		return "1e" + strconv.FormatInt(int64(u), 10) + " PYI"
 	}
 }
 
-// Amount represents the base kaspa monetary unit (colloquially referred
-// to as a `Sompi'). A single Amount is equal to 1e-8 of a kaspa.
+// Amount represents the base pyrin monetary unit (colloquially referred
+// to as a `Leor'). A single Amount is equal to 1e-8 of a pyrin.
 type Amount uint64
 
 // round converts a floating point number, which may or may not be representable
@@ -66,15 +67,15 @@ func round(f float64) Amount {
 }
 
 // NewAmount creates an Amount from a floating point value representing
-// some value in kaspa. NewAmount errors if f is NaN or +-Infinity, but
-// does not check that the amount is within the total amount of kaspa
+// some value in pyrin. NewAmount errors if f is NaN or +-Infinity, but
+// does not check that the amount is within the total amount of pyrin
 // producible as f may not refer to an amount at a single moment in time.
 //
-// NewAmount is for specifically for converting KAS to Sompi.
-// For creating a new Amount with an int64 value which denotes a quantity of Sompi,
+// NewAmount is for specifically for converting PYI to Leor.
+// For creating a new Amount with an int64 value which denotes a quantity of Leor,
 // do a simple type conversion from type int64 to Amount.
-// TODO: Refactor NewAmount. When amounts are more than 1e9 KAS, the precision
-// can be higher than one sompi (1e9 and 1e9+1e-8 will result as the same number)
+// TODO: Refactor NewAmount. When amounts are more than 1e9 PYI, the precision
+// can be higher than one leor (1e9 and 1e9+1e-8 will result as the same number)
 func NewAmount(f float64) (Amount, error) {
 	// The amount is only considered invalid if it cannot be represented
 	// as an integer type. This may happen if f is NaN or +-Infinity.
@@ -84,40 +85,40 @@ func NewAmount(f float64) (Amount, error) {
 	case math.IsInf(f, 1):
 		fallthrough
 	case math.IsInf(f, -1):
-		return 0, errors.New("invalid kaspa amount")
+		return 0, errors.New("invalid pyrin amount")
 	}
 
-	return round(f * constants.SompiPerKaspa), nil
+	return round(f * constants.LeorPerPyrin), nil
 }
 
-// ToUnit converts a monetary amount counted in kaspa base units to a
-// floating point value representing an amount of kaspa.
+// ToUnit converts a monetary amount counted in pyrin base units to a
+// floating point value representing an amount of pyrin.
 func (a Amount) ToUnit(u AmountUnit) float64 {
 	return float64(a) / math.Pow10(int(u+8))
 }
 
-// ToKAS is the equivalent of calling ToUnit with AmountKAS.
-func (a Amount) ToKAS() float64 {
-	return a.ToUnit(AmountKAS)
+// ToPYI is the equivalent of calling ToUnit with AmountPYI.
+func (a Amount) ToPYI() float64 {
+	return a.ToUnit(AmountPYI)
 }
 
-// Format formats a monetary amount counted in kaspa base units as a
+// Format formats a monetary amount counted in pyrin base units as a
 // string for a given unit. The conversion will succeed for any unit,
 // however, known units will be formated with an appended label describing
-// the units with SI notation, or "Sompi" for the base unit.
+// the units with SI notation, or "Leor" for the base unit.
 func (a Amount) Format(u AmountUnit) string {
 	units := " " + u.String()
 	return strconv.FormatFloat(a.ToUnit(u), 'f', -int(u+8), 64) + units
 }
 
-// String is the equivalent of calling Format with AmountKAS.
+// String is the equivalent of calling Format with AmountPYI.
 func (a Amount) String() string {
-	return a.Format(AmountKAS)
+	return a.Format(AmountPYI)
 }
 
 // MulF64 multiplies an Amount by a floating point value. While this is not
 // an operation that must typically be done by a full node or wallet, it is
-// useful for services that build on top of kaspa (for example, calculating
+// useful for services that build on top of pyrin (for example, calculating
 // a fee by multiplying by a percentage).
 func (a Amount) MulF64(f float64) Amount {
 	return round(float64(a) * f)

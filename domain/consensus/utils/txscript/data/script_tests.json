@@ -1193,26 +1193,26 @@
   ],
   [
     "''",
-    "NOP BLAKE2B 0x20 0x0e5751c026e543b2e8ab2eb06099daa1d1e5df47778f7787faab45cdf12fe3a8 EQUAL",
+    "NOP BLAKE3 0x20 0xaf1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262 EQUAL",
     "",
     "OK"
   ],
   [
     "'a'",
-    "BLAKE2B NOP 0x20 0x8928aae63c84d87ea098564d1e03ad813f107add474e56aedd286349c0c03ea4 EQUAL",
+    "BLAKE3 NOP 0x20 0x17762fddd969a453925d65717ac3eea21320b66b54342fde15128d6caf21215f EQUAL",
     "",
     "OK"
   ],
   [
     "'abcdefghijklmnopqrstuvwxyz'",
-    "NOP BLAKE2B 0x20 0x117ad6b940f5e8292c007d9c7e7350cd33cf85b5887e8da71c7957830f536e7c EQUAL",
+    "NOP BLAKE3 0x20 0x117ad6b940f5e8292c007d9c7e7350cd33cf85b5887e8da71c7957830f536e7c EQUAL",
     "",
     "OK",
     "The NOP is added so the script won't be interpreted as P2SH"
   ],
   [
     "'a'",
-    "NOP BLAKE2B 0x20 0x8928aae63c84d87ea098564d1e03ad813f107add474e56aedd286349c0c03ea4 EQUAL",
+    "NOP BLAKE3 0x20 0x17762fddd969a453925d65717ac3eea21320b66b54342fde15128d6caf21215f EQUAL",
     "",
     "OK"
   ],
@@ -2157,7 +2157,7 @@
   ],
   [
     "0",
-    "BLAKE2B",
+    "BLAKE3",
     "",
     "OK"
   ],
@@ -2470,7 +2470,7 @@
   ],
   [
     "0x01 1",
-    "BLAKE2B 0x20 0xce57216285125006ec18197bd8184221cefa559bb0798410d99a5bba5b07cd1d EQUAL",
+    "BLAKE3 0x20 0xce57216285125006ec18197bd8184221cefa559bb0798410d99a5bba5b07cd1d EQUAL",
     "",
     "OK",
     "Very basic P2SH"
@@ -4170,13 +4170,13 @@
   ],
   [
     "",
-    "BLAKE2B",
+    "BLAKE3",
     "",
     "INVALID_STACK_OPERATION"
   ],
   [
     "",
-    "BLAKE2B",
+    "BLAKE3",
     "",
     "INVALID_STACK_OPERATION"
   ],
@@ -4629,13 +4629,13 @@
   ],
   [
     "",
-    "BLAKE2B 1",
+    "BLAKE3 1",
     "",
     "INVALID_STACK_OPERATION"
   ],
   [
     "",
-    "BLAKE2B 1",
+    "BLAKE3 1",
     "",
     "INVALID_STACK_OPERATION"
   ],
@@ -4728,21 +4728,21 @@
   ],
   [
     "NOP 0x01 1",
-    "BLAKE2B 0x20 0xda1745e9b549bd0bfa1a569971c77eba30cd5a4b EQUAL",
+    "BLAKE3 0x20 0xda1745e9b549bd0bfa1a569971c77eba30cd5a4b EQUAL",
     "",
     "SIG_PUSHONLY",
     "Tests for Script.IsPushOnly()"
   ],
   [
     "0 0x01 0x50",
-    "BLAKE2B 0x20 0xece424a6bb6ddf4db592c0faed60685047a361b1 EQUAL",
+    "BLAKE3 0x20 0xece424a6bb6ddf4db592c0faed60685047a361b1 EQUAL",
     "",
     "BAD_OPCODE",
     "OP_RESERVED in P2SH should fail"
   ],
   [
     "0 0x01",
-    "VER BLAKE2B 0x20 0x0f4d7845db968f2a81b530b6f3c1d6246d4c7e01 EQUAL",
+    "VER BLAKE3 0x20 0x0f4d7845db968f2a81b530b6f3c1d6246d4c7e01 EQUAL",
     "",
     "BAD_OPCODE",
     "OP_VER in P2SH should fail"

@@ -8,11 +8,11 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/kaspanet/kaspad/domain/consensus/model/externalapi"
-	"github.com/kaspanet/kaspad/version"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/version"
 
-	"github.com/kaspanet/kaspad/infrastructure/network/netadapter/id"
-	"github.com/kaspanet/kaspad/util/mstime"
+	"github.com/Pyrinpyi/pyipad/infrastructure/network/netadapter/id"
+	"github.com/Pyrinpyi/pyipad/util/mstime"
 )
 
 // MaxUserAgentLen is the maximum allowed length for the user agent field in a
@@ -20,9 +20,9 @@ import (
 const MaxUserAgentLen = 256
 
 // DefaultUserAgent for appmessage in the stack
-var DefaultUserAgent = fmt.Sprintf("/kaspad:%s/", version.Version())
+var DefaultUserAgent = fmt.Sprintf("/pyipad:%s/", version.Version())
 
-// MsgVersion implements the Message interface and represents a kaspa version
+// MsgVersion implements the Message interface and represents a pyrin version
 // message. It is used for a peer to advertise itself as soon as an outbound
 // connection is made. The remote peer then uses this information along with
 // its own to negotiate. The remote peer must then respond with a version
@@ -78,7 +78,7 @@ func (msg *MsgVersion) Command() MessageCommand {
 	return CmdVersion
 }
 
-// NewMsgVersion returns a new kaspa version message that conforms to the
+// NewMsgVersion returns a new pyrin version message that conforms to the
 // Message interface using the passed parameters and defaults for the remaining
 // fields.
 func NewMsgVersion(addr *NetAddress, id *id.ID, network string,
