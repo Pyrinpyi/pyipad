@@ -51,7 +51,7 @@ $ pyipad
 ```
 
 ## Discord
-Join our discord server using the following link: https://discord.gg/YNYnNN5Pf2
+Join our discord server using the following link: https://discord.gg/sFSASsgx
 
 ## Issue Tracker
 
