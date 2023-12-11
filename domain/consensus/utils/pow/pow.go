@@ -45,7 +45,7 @@ func NewState(header externalapi.MutableBlockHeader) *State {
 // CalculateProofOfWorkValue hashes the internal header and returns its big.Int value
 func (state *State) CalculateProofOfWorkValue() *big.Int {
 	// PRE_POW_HASH || TIME || 32 zero byte padding || NONCE
-	writer := hashes.NewPoWHashWriter()
+	writer := hashes.PoWHashWriter()
 	writer.InfallibleWrite(state.prePowHash.ByteSlice())
 	err := serialization.WriteElement(writer, state.Timestamp)
 	if err != nil {

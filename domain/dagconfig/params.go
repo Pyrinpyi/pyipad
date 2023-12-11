@@ -210,13 +210,13 @@ var MainnetParams = Params{
 	K:           defaultGHOSTDAGK,
 	Name:        "pyrin-mainnet",
 	Net:         appmessage.Mainnet,
-	RPCPort:     "16110",
-	DefaultPort: "16111",
+	RPCPort:     "13110",
+	DefaultPort: "13111",
 	DNSSeeds: []string{
-		"seeder1.pyrin.network",
-		"seeder.pyrins.network",
-		"seeder1.pyrins.network",
-		"seeder2.pyrins.network",
+		"seeder1-mainnet.pyrin.network",
+		"seeder2-mainnet.pyrin.network",
+		"seeder3-mainnet.pyrin.network",
+		"seeder4-mainnet.pyrin.network",
 	},
 
 	// DAG parameters
@@ -267,7 +267,7 @@ var MainnetParams = Params{
 	CoinbasePayloadScriptPublicKeyMaxLength: defaultCoinbasePayloadScriptPublicKeyMaxLength,
 	PruningProofM:                           defaultPruningProofM,
 	DeflationaryPhaseDaaScore:               defaultDeflationaryPhaseDaaScore,
-	DisallowDirectBlocksOnTopOfGenesis:      true,
+	DisallowDirectBlocksOnTopOfGenesis:      false,
 
 	// This is technically 255, but we clamped it at 256 - block level of mainnet genesis
 	// This means that any block that has a level lower or equal to genesis will be level 0.
