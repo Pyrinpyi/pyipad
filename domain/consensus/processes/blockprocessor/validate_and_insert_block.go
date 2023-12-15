@@ -1,15 +1,10 @@
 package blockprocessor
 
 import (
-	"bytes"
-	"compress/gzip"
-	"sync"
 
 	// we need to embed the utxoset of mainnet genesis here
 	_ "embed"
 	"fmt"
-	"github.com/Pyrinpyi/go-muhash"
-	"io"
 
 	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
 	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
@@ -23,9 +18,6 @@ import (
 	"github.com/Pyrinpyi/pyipad/util/staging"
 	"github.com/pkg/errors"
 )
-
-//go:embed resources/pyrin.gz
-var utxoPyrinDumpFile []byte
 
 func (bp *blockProcessor) setBlockStatusAfterBlockValidation(
 	stagingArea *model.StagingArea, block *externalapi.DomainBlock, isPruningPoint bool) (externalapi.BlockStatus, error) {
@@ -139,11 +131,7 @@ func (bp *blockProcessor) validateAndInsertBlock(stagingArea *model.StagingArea,
 		}
 	}
 
-	err = bp.ifGenesisSetUtxoSet(block)
-	if err != nil {
-		return nil, externalapi.StatusInvalid, err
-	}
-
+	bp.loadUTXODataForGenesis(stagingArea, block)
 	var selectedParentChainChanges *externalapi.SelectedChainPath
 	var virtualUTXODiff externalapi.UTXODiff
 	var reversalData *model.UTXODiffReversalData
@@ -237,16 +225,7 @@ func (bp *blockProcessor) loadUTXODataForGenesis(stagingArea *model.StagingArea,
 		return
 	}
 	blockHash := consensushashing.BlockHash(block)
-	// Note: The applied UTXO set and multiset do not satisfy the UTXO commitment
-	// of Mainnet's genesis. This is why any block that will be built on top of genesis
-	// will have a wrong UTXO commitment as well, and will not be able to get to a consensus
-	// with the rest of the network.
-	// This is why getting direct blocks on top of genesis is forbidden, and the only way to
-	// get a newer state for a node with genesis only is by requesting a proof for a recent
-	// pruning point.
-	// The actual UTXO set that fits Mainnet's genesis' UTXO commitment was removed from the codebase in order
-	// to make reduce the consensus initialization time and the compiled binary size, but can be still
-	// found here for anyone to verify: https://github.com/Pyrinpyi/pyipad/blob/dbf18d8052f000ba0079be9e79b2d6f5a98b74ca/domain/consensus/processes/blockprocessor/resources/utxos.gz
+
 	bp.consensusStateStore.StageVirtualUTXODiff(stagingArea, utxo.NewUTXODiff())
 	bp.utxoDiffStore.Stage(stagingArea, blockHash, utxo.NewUTXODiff(), nil)
 	bp.multisetStore.Stage(stagingArea, blockHash, multiset.New())
@@ -269,93 +248,6 @@ func (bp *blockProcessor) updateReachabilityReindexRoot(stagingArea *model.Stagi
 	}
 
 	return bp.reachabilityManager.UpdateReindexRoot(stagingArea, headersSelectedTip)
-}
-
-var mainnetGenesisUTXOSet externalapi.UTXODiff
-var mainnetGenesisMultiSet model.Multiset
-var mainnetGenesisOnce sync.Once
-var mainnetGenesisErr error
-
-func deserializeMainnetUTXOSet() (externalapi.UTXODiff, model.Multiset, error) {
-	mainnetGenesisOnce.Do(func() {
-		toAdd := make(map[externalapi.DomainOutpoint]externalapi.UTXOEntry)
-		mainnetGenesisMultiSet = multiset.New()
-		file, err := gzip.NewReader(bytes.NewReader(utxoPyrinDumpFile))
-		if err != nil {
-			mainnetGenesisErr = err
-			return
-		}
-		for i := 0; ; i++ {
-			size := make([]byte, 1)
-			_, err = io.ReadFull(file, size)
-			if errors.Is(err, io.EOF) {
-				break
-			}
-			if err != nil {
-				mainnetGenesisErr = err
-				return
-			}
-
-			serializedUTXO := make([]byte, size[0])
-			_, err = io.ReadFull(file, serializedUTXO)
-			if err != nil {
-				mainnetGenesisErr = err
-				return
-			}
-
-			mainnetGenesisMultiSet.Add(serializedUTXO)
-
-			entry, outpoint, err := utxo.DeserializeUTXO(serializedUTXO)
-			if err != nil {
-				mainnetGenesisErr = err
-				return
-			}
-			toAdd[*outpoint] = entry
-		}
-		mainnetGenesisUTXOSet, mainnetGenesisErr = utxo.NewUTXODiffFromCollections(utxo.NewUTXOCollection(toAdd), utxo.NewUTXOCollection(make(map[externalapi.DomainOutpoint]externalapi.UTXOEntry)))
-	})
-	return mainnetGenesisUTXOSet, mainnetGenesisMultiSet, mainnetGenesisErr
-}
-
-func (bp *blockProcessor) ifGenesisSetUtxoSet(block *externalapi.DomainBlock) error {
-	isGenesis := len(block.Header.DirectParents()) == 0
-	if !isGenesis {
-		return nil
-	}
-	blockHash := consensushashing.BlockHash(block)
-	if !block.Header.UTXOCommitment().Equal(externalapi.NewDomainHashFromByteArray(muhash.EmptyMuHashHash.AsArray())) {
-		log.Infof("Loading checkpoint UTXO set")
-		diff, utxoSetMultiset, err := deserializeMainnetUTXOSet()
-		if err != nil {
-			return err
-		}
-		log.Infof("Finished loading checkpoint UTXO set")
-		utxoSetHash := utxoSetMultiset.Hash()
-		if !utxoSetHash.Equal(block.Header.UTXOCommitment()) {
-			return errors.New("Invalid UTXO set dump")
-		}
-
-		area := model.NewStagingArea()
-		bp.consensusStateStore.StageVirtualUTXODiff(area, diff)
-		bp.utxoDiffStore.Stage(area, blockHash, diff, nil)
-		// commit the multiset of genesis
-		bp.multisetStore.Stage(area, blockHash, utxoSetMultiset)
-		err = staging.CommitAllChanges(bp.databaseContext, area)
-		if err != nil {
-			return err
-		}
-	} else {
-		// if it's genesis but has an empty muhash then commit an empty multiset and an empty diff
-		area := model.NewStagingArea()
-		bp.consensusStateStore.StageVirtualUTXODiff(area, utxo.NewUTXODiff())
-		bp.utxoDiffStore.Stage(area, blockHash, utxo.NewUTXODiff(), nil)
-		bp.multisetStore.Stage(area, blockHash, multiset.New())
-		err := staging.CommitAllChanges(bp.databaseContext, area)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
 }
 
 func (bp *blockProcessor) checkBlockStatus(stagingArea *model.StagingArea, block *externalapi.DomainBlock) error {
