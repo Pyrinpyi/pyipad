@@ -1,7 +1,7 @@
 name: Build and upload assets
 on:
   release:
-    types: [ draft ]
+    types: [ published ]
 
 jobs:
   build:
