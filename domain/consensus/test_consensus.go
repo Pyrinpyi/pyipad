@@ -3,10 +3,11 @@ package consensus
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+
 	"github.com/Pyrinpyi/pyipad/domain/consensus/model"
 	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/hashset"
 	"github.com/Pyrinpyi/pyipad/util/staging"
-	"io"
 
 	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 	"github.com/Pyrinpyi/pyipad/domain/consensus/model/testapi"
@@ -67,6 +68,16 @@ func (tc *testConsensus) AddBlock(parentHashes []*externalapi.DomainHash, coinba
 	}
 
 	return consensushashing.BlockHash(block), virtualChangeSet, nil
+}
+func (tc *testConsensus) AddBlockOnTips(coinbaseData *externalapi.DomainCoinbaseData,
+	transactions []*externalapi.DomainTransaction) (*externalapi.DomainHash, *externalapi.VirtualChangeSet, error) {
+
+	tips, err := tc.Tips()
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return tc.AddBlock(tips, coinbaseData, transactions)
 }
 
 func (tc *testConsensus) AddUTXOInvalidHeader(parentHashes []*externalapi.DomainHash) (*externalapi.DomainHash,

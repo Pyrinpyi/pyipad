@@ -2,19 +2,8 @@ package mempool
 
 import (
 	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
-	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
 	"github.com/Pyrinpyi/pyipad/domain/miningmanager/mempool/model"
 )
-
-func (mp *mempool) removeTransactions(transactions []*externalapi.DomainTransaction, removeRedeemers bool) error {
-	for _, transaction := range transactions {
-		err := mp.removeTransaction(consensushashing.TransactionID(transaction), removeRedeemers)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
 
 func (mp *mempool) removeTransaction(transactionID *externalapi.DomainTransactionID, removeRedeemers bool) error {
 	if _, ok := mp.orphansPool.allOrphans[*transactionID]; ok {

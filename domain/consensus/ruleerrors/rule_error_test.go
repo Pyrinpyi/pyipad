@@ -50,7 +50,7 @@ func TestNewErrMissingTxOut(t *testing.T) {
 func TestNewErrInvalidTransactionsInNewBlock(t *testing.T) {
 	tx := &externalapi.DomainTransaction{Fee: 1337}
 	txID := consensushashing.TransactionID(tx)
-	outer := NewErrInvalidTransactionsInNewBlock([]InvalidTransaction{{tx, ErrNoTxInputs}})
+	outer := NewErrInvalidTransactionsInNewBlock([]InvalidTransaction{{tx, &ErrNoTxInputs}})
 	//TODO: Implement Stringer for `DomainTransaction`
 	expectedOuterErr := fmt.Sprintf("ErrInvalidTransactionsInNewBlock: [(%s: ErrNoTxInputs)]", txID)
 	inner := &ErrInvalidTransactionsInNewBlock{}
@@ -61,7 +61,7 @@ func TestNewErrInvalidTransactionsInNewBlock(t *testing.T) {
 	if len(inner.InvalidTransactions) != 1 {
 		t.Fatalf("TestNewErrInvalidTransactionsInNewBlock: Expected len(inner.MissingOutpoints) 1, found: %d", len(inner.InvalidTransactions))
 	}
-	if inner.InvalidTransactions[0].Error != ErrNoTxInputs {
+	if *inner.InvalidTransactions[0].Error != ErrNoTxInputs {
 		t.Fatalf("TestNewErrInvalidTransactionsInNewBlock: Expected ErrNoTxInputs. found: %v", inner.InvalidTransactions[0].Error)
 	}
 	if inner.InvalidTransactions[0].Transaction.Fee != 1337 {

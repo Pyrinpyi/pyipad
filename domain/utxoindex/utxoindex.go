@@ -1,11 +1,12 @@
 package utxoindex
 
 import (
+	"sync"
+
 	"github.com/Pyrinpyi/pyipad/domain"
 	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
 	"github.com/Pyrinpyi/pyipad/infrastructure/db/database"
 	"github.com/Pyrinpyi/pyipad/infrastructure/logger"
-	"sync"
 )
 
 // UTXOIndex maintains an index between transaction scriptPublicKeys
@@ -51,6 +52,7 @@ func New(domain domain.Domain, database database.Database) (*UTXOIndex, error) {
 func (ui *UTXOIndex) Reset() error {
 	ui.mutex.Lock()
 	defer ui.mutex.Unlock()
+	log.Infof("Starting UTXO index reset")
 
 	err := ui.store.deleteAll()
 	if err != nil {
@@ -88,7 +90,13 @@ func (ui *UTXOIndex) Reset() error {
 	}
 
 	// This has to be done last to mark that the reset went smoothly and no reset has to be called next time.
-	return ui.store.updateAndCommitVirtualParentsWithoutTransaction(virtualInfo.ParentHashes)
+	err = ui.store.updateAndCommitVirtualParentsWithoutTransaction(virtualInfo.ParentHashes)
+	if err != nil {
+		return err
+	}
+
+	log.Infof("Finished UTXO index reset")
+	return nil
 }
 
 func (ui *UTXOIndex) isSynced() (bool, error) {

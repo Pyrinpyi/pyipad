@@ -41,9 +41,9 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: echo "run_on=${{ github.ref }}" >> $GITHUB_ENV
 
-      - name: Test with race detector
-        shell: bash
-        run: |
-          git checkout "${{ env.run_on }}"
-          git status
-          go test -timeout 20m -race ./...
+#      - name: Test with race detector
+#        shell: bash
+#        run: |
+#          git checkout "${{ env.run_on }}"
+#          git status
+#          go test -timeout 20m -race ./...

@@ -1,13 +1,14 @@
 package blocktemplatebuilder
 
 import (
+	"math"
+	"sort"
+
 	"github.com/Pyrinpyi/pyipad/domain/consensus/processes/coinbasemanager"
 	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/merkle"
 	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/transactionhelper"
 	"github.com/Pyrinpyi/pyipad/domain/consensusreference"
 	"github.com/Pyrinpyi/pyipad/util/mstime"
-	"math"
-	"sort"
 
 	"github.com/Pyrinpyi/pyipad/util/difficulty"
 
@@ -147,16 +148,13 @@ func (btb *blockTemplateBuilder) BuildBlockTemplate(
 	invalidTxsErr := ruleerrors.ErrInvalidTransactionsInNewBlock{}
 	if errors.As(err, &invalidTxsErr) {
 		log.Criticalf("consensusReference.Consensus().BuildBlock returned invalid txs in BuildBlockTemplate")
-		invalidTxs := make([]*consensusexternalapi.DomainTransaction, 0, len(invalidTxsErr.InvalidTransactions))
-		for _, tx := range invalidTxsErr.InvalidTransactions {
-			invalidTxs = append(invalidTxs, tx.Transaction)
-		}
-		err = btb.mempool.RemoveTransactions(invalidTxs, true)
+		err = btb.mempool.RemoveInvalidTransactions(&invalidTxsErr)
 		if err != nil {
 			// mempool.RemoveTransactions might return errors in situations that are perfectly fine in this context.
 			// TODO: Once the mempool invariants are clear, this should be converted back `return nil, err`:
 			// https://github.com/Pyrinpyi/pyipad/issues/1553
 			log.Criticalf("Error from mempool.RemoveTransactions: %+v", err)
+			log.Criticalf("Error from mempool.RemoveInvalidTransactions: %+v", err)
 		}
 		// We can call this recursively without worry because this should almost never happen
 		return btb.BuildBlockTemplate(coinbaseData)
