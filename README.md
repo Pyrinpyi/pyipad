@@ -6,6 +6,7 @@ pyipad
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](http://godoc.org/github.com/Pyrinpyi/pyipad)
 
 pyipad is the reference full node Pyrin implementation written in Go (golang).
+(Fork of https://github.com/kaspanet/kaspad)
 
 ## What is pyrin
 
