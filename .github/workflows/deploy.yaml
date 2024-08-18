@@ -3,9 +3,15 @@ on:
   release:
     types: [ published ]
 
+permissions:
+  contents: write
+  pull-requests: write
+  repository-projects: write
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    permissions: write-all
     strategy:
       fail-fast: false
       matrix:
