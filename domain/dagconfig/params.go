@@ -187,6 +187,8 @@ type Params struct {
 	MaxBlockLevel int
 
 	MergeDepth uint64
+
+	HFActivationDAAScore uint64
 }
 
 // NormalizeRPCServerAddress returns addr with the current network default
@@ -273,6 +275,8 @@ var MainnetParams = Params{
 	// This means that any block that has a level lower or equal to genesis will be level 0.
 	MaxBlockLevel: 225,
 	MergeDepth:    defaultMergeDepth,
+
+	HFActivationDAAScore: 23_804_844,
 }
 
 // TestnetParams defines the network parameters for the test Pyrin network.
