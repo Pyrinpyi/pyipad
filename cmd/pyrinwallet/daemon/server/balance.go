@@ -19,11 +19,6 @@ func (s *server) GetBalance(_ context.Context, _ *pb.GetBalanceRequest) (*pb.Get
 		return nil, err
 	}
 	daaScore := dagInfo.VirtualDAAScore
-
-	if daaScore > s.params.HFActivationDAAScore {
-		s.params.BlockCoinbaseMaturity = 1000
-	}
-
 	maturity := s.params.BlockCoinbaseMaturity
 
 	balancesMap := make(balancesMapType, 0)
