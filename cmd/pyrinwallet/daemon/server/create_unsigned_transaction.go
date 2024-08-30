@@ -106,10 +106,6 @@ func (s *server) selectUTXOs(spendAmount uint64, isSendAll bool, feePerInput uin
 		return nil, 0, 0, err
 	}
 
-	if dagInfo.VirtualDAAScore > s.params.HFActivationDAAScore {
-		s.params.BlockCoinbaseMaturity = 1000
-	}
-
 	coinbaseMaturity := s.params.BlockCoinbaseMaturity
 	if dagInfo.NetworkName == "pyrin-testnet-10" {
 		coinbaseMaturity = 1000
