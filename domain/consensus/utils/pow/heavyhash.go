@@ -77,7 +77,7 @@ func (mat *matrix) HeavyHash(hash *externalapi.DomainHash) *externalapi.DomainHa
 		for j := 0; j < 64; j++ {
 			sum += mat[i][j] * vector[j]
 		}
-		product[i] = sum >> 10
+		product[i] = (sum & 0xF) ^ ((sum >> 4) & 0xF) ^ ((sum >> 8) & 0xF)
 	}
 
 	// Concatenate 4 LSBs back to 8 bit xor with sum1
