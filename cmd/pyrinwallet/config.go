@@ -4,9 +4,8 @@ import (
 	"os"
 
 	"github.com/Pyrinpyi/pyipad/infrastructure/config"
-	"github.com/pkg/errors"
-
 	"github.com/jessevdk/go-flags"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -22,6 +21,8 @@ const (
 	newAddressSubCmd                = "new-address"
 	dumpUnencryptedDataSubCmd       = "dump-unencrypted-data"
 	startDaemonSubCmd               = "start-daemon"
+	versionSubCmd                   = "version"
+	getDaemonVersionSubCmd          = "get-daemon-version"
 )
 
 const (
@@ -30,6 +31,7 @@ const (
 )
 
 type configFlags struct {
+	ShowVersion bool `short:"V" long:"version" description:"Display version information and exit"`
 	config.NetworkFlags
 }
 
@@ -57,7 +59,7 @@ type sendConfig struct {
 	DaemonAddress            string   `long:"daemonaddress" short:"d" description:"Wallet daemon server to connect to"`
 	ToAddress                string   `long:"to-address" short:"t" description:"The public address to send Pyrin to" required:"true"`
 	FromAddresses            []string `long:"from-address" short:"a" description:"Specific public address to send Pyrin from. Use multiple times to accept several addresses" required:"false"`
-	SendAmount               float64  `long:"send-amount" short:"v" description:"An amount to send in Pyrin (e.g. 1234.12345678)"`
+	SendAmount               string   `long:"send-amount" short:"v" description:"An amount to send in Pyrin (e.g. 1234.12345678)"`
 	IsSendAll                bool     `long:"send-all" description:"Send all the Pyrin in the wallet (mutually exclusive with --send-amount)"`
 	UseExistingChangeAddress bool     `long:"use-existing-change-address" short:"u" description:"Will use an existing change address (in case no change address was ever used, it will use a new one)"`
 	Verbose                  bool     `long:"show-serialized" short:"s" description:"Show a list of hex encoded sent transactions"`
@@ -74,7 +76,7 @@ type createUnsignedTransactionConfig struct {
 	DaemonAddress            string   `long:"daemonaddress" short:"d" description:"Wallet daemon server to connect to"`
 	ToAddress                string   `long:"to-address" short:"t" description:"The public address to send Pyrin to" required:"true"`
 	FromAddresses            []string `long:"from-address" short:"a" description:"Specific public address to send Pyrin from. Use multiple times to accept several addresses" required:"false"`
-	SendAmount               float64  `long:"send-amount" short:"v" description:"An amount to send in Pyrin (e.g. 1234.12345678)"`
+	SendAmount               string   `long:"send-amount" short:"v" description:"An amount to send in Pyrin (e.g. 1234.12345678)"`
 	IsSendAll                bool     `long:"send-all" description:"Send all the Pyrin in the wallet (mutually exclusive with --send-amount)"`
 	UseExistingChangeAddress bool     `long:"use-existing-change-address" short:"u" description:"Will use an existing change address (in case no change address was ever used, it will use a new one)"`
 	config.NetworkFlags
@@ -127,6 +129,13 @@ type dumpUnencryptedDataConfig struct {
 	Password string `long:"password" short:"p" description:"Wallet password"`
 	Yes      bool   `long:"yes" short:"y" description:"Assume \"yes\" to all questions"`
 	config.NetworkFlags
+}
+
+type versionConfig struct {
+}
+
+type getDaemonVersionConfig struct {
+	DaemonAddress string `long:"daemonaddress" short:"d" description:"Wallet daemon server to connect to"`
 }
 
 func parseCommandLine() (subCommand string, config interface{}) {
@@ -185,6 +194,9 @@ func parseCommandLine() (subCommand string, config interface{}) {
 		Listen:    defaultListen,
 	}
 	parser.AddCommand(startDaemonSubCmd, "Start the wallet daemon", "Start the wallet daemon", startDaemonConf)
+	parser.AddCommand(versionSubCmd, "Get the wallet version", "Get the wallet version", &versionConfig{})
+	getDaemonVersionConf := &getDaemonVersionConfig{DaemonAddress: defaultListen}
+	parser.AddCommand(getDaemonVersionSubCmd, "Get the wallet daemon version", "Get the wallet daemon version", getDaemonVersionConf)
 
 	_, err := parser.Parse()
 	if err != nil {
@@ -290,14 +302,17 @@ func parseCommandLine() (subCommand string, config interface{}) {
 			printErrorAndExit(err)
 		}
 		config = startDaemonConf
+	case versionSubCmd:
+	case getDaemonVersionSubCmd:
+		config = getDaemonVersionConf
 	}
 
 	return parser.Command.Active.Name, config
 }
 
 func validateCreateUnsignedTransactionConf(conf *createUnsignedTransactionConfig) error {
-	if (!conf.IsSendAll && conf.SendAmount == 0) ||
-		(conf.IsSendAll && conf.SendAmount > 0) {
+	if (!conf.IsSendAll && conf.SendAmount == "") ||
+		(conf.IsSendAll && conf.SendAmount != "") {
 
 		return errors.New("exactly one of '--send-amount' or '--all' must be specified")
 	}
@@ -305,8 +320,8 @@ func validateCreateUnsignedTransactionConf(conf *createUnsignedTransactionConfig
 }
 
 func validateSendConfig(conf *sendConfig) error {
-	if (!conf.IsSendAll && conf.SendAmount == 0) ||
-		(conf.IsSendAll && conf.SendAmount > 0) {
+	if (!conf.IsSendAll && conf.SendAmount == "") ||
+		(conf.IsSendAll && conf.SendAmount != "") {
 
 		return errors.New("exactly one of '--send-amount' or '--all' must be specified")
 	}

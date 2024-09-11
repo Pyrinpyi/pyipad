@@ -7,6 +7,7 @@ import (
 	"github.com/Pyrinpyi/pyipad/cmd/pyrinwallet/libpyrinwallet"
 	"github.com/Pyrinpyi/pyipad/cmd/pyrinwallet/libpyrinwallet/serialization"
 	"github.com/Pyrinpyi/pyipad/domain/consensus/model/externalapi"
+	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/consensushashing"
 	"github.com/Pyrinpyi/pyipad/infrastructure/network/rpcclient"
 	"github.com/pkg/errors"
 	"time"
@@ -54,16 +55,12 @@ func (s *server) broadcast(transactions [][]byte, isDomain bool) ([]string, erro
 		}
 	}
 
-	err = s.refreshUTXOs()
-	if err != nil {
-		return nil, err
-	}
-
+	s.forceSync()
 	return txIDs, nil
 }
 
 func sendTransaction(client *rpcclient.RPCClient, tx *externalapi.DomainTransaction) (string, error) {
-	submitTransactionResponse, err := client.SubmitTransaction(appmessage.DomainTransactionToRPCTransaction(tx), false)
+	submitTransactionResponse, err := client.SubmitTransaction(appmessage.DomainTransactionToRPCTransaction(tx), consensushashing.TransactionID(tx).String(), false)
 	if err != nil {
 		return "", errors.Wrapf(err, "error submitting transaction")
 	}

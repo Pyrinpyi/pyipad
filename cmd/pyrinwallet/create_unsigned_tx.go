@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/Pyrinpyi/pyipad/cmd/pyrinwallet/utils"
 	"os"
 
 	"github.com/Pyrinpyi/pyipad/cmd/pyrinwallet/daemon/client"
 	"github.com/Pyrinpyi/pyipad/cmd/pyrinwallet/daemon/pb"
-	"github.com/Pyrinpyi/pyipad/domain/consensus/utils/constants"
 )
 
 func createUnsignedTransaction(conf *createUnsignedTransactionConfig) error {
@@ -20,7 +20,12 @@ func createUnsignedTransaction(conf *createUnsignedTransactionConfig) error {
 	ctx, cancel := context.WithTimeout(context.Background(), daemonTimeout)
 	defer cancel()
 
-	sendAmountLeor := uint64(conf.SendAmount * constants.LeorPerPyrin)
+	sendAmountLeor, err := utils.PyiToLeor(conf.SendAmount)
+
+	if err != nil {
+		return err
+	}
+
 	response, err := daemonClient.CreateUnsignedTransactions(ctx, &pb.CreateUnsignedTransactionsRequest{
 		From:                     conf.FromAddresses,
 		Address:                  conf.ToAddress,
